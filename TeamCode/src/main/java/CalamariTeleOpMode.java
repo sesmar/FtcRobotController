@@ -1,8 +1,9 @@
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Common.CalamariRobot;
 
-@TeleOp
+@TeleOp(name="Calamari: TeleOpMode", group="Linear OpMode")
 public class CalamariTeleOpMode extends LinearOpMode {
 
 	CalamariRobot robot = new CalamariRobot(this);
@@ -19,7 +20,7 @@ public class CalamariTeleOpMode extends LinearOpMode {
 			telemetry.addData("Status", "Running");
 			telemetry.update();
 
-			robot.driveRobot();
+			//robot.driveRobot();
 		}
 	}
 }
