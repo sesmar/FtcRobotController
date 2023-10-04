@@ -56,11 +56,20 @@ public class CalamariRobot {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    private DcMotor leftFrontDrive   = null;
-    private DcMotor rightFrontDrive  = null;
-	private DcMotor leftBackDrive   = null;
-	private DcMotor rightBackDrive  = null;
-    private DcMotor liftMotor = null;
+    public DcMotor leftFrontDrive   = null;
+    public DcMotor rightFrontDrive  = null;
+    public DcMotor leftBackDrive   = null;
+    public DcMotor rightBackDrive  = null;
+    public DcMotor liftMotor = null;
+
+    //define static variables for use within the program
+    //Wheel Diameter
+    public static final double wheelDiamater = 2.875;
+    //Counts Per Revolution for the Drive Motors
+    public static  final double CPR = 560;
+
+    //Count Per Inch for the Drive Motors
+    public static final double CPI = CPR/wheelDiamater;
 
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
@@ -87,16 +96,25 @@ public class CalamariRobot {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-		leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-		leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+		leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+		leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
-		rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-		rightBackDrive .setDirection(DcMotor.Direction.REVERSE);
+		rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+		rightBackDrive .setDirection(DcMotor.Direction.FORWARD);
+
+        leftFrontDrive.setPower(0);
+        leftBackDrive.setPower(0);
+        rightFrontDrive.setPower(0);
+        rightBackDrive.setPower(0);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();
     }
 
+    /**
+     * Sets the power on all drive motors to 0.
+     *
+     */
 	public void stopRobot() {
 		leftFrontDrive.setPower(0);
 		leftBackDrive.setPower(0);
@@ -105,43 +123,61 @@ public class CalamariRobot {
 	}
 
     /**
-     * Calculates the left/right motor powers required to achieve the requested
-     * robot motions: Drive (Axial motion) and Turn (Yaw motion).
-     * Then sends these power levels to the motors.
-     *
-     * @param Drive     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
-     * @param Turn      Right/Left turning power (-1.0 to 1.0) +ve is CW
-     */
-    public void driveRobot(double Drive, double Turn) {
-        // Combine drive and turn for blended motion.
-        double left  = Drive + Turn;
-        double right = Drive - Turn;
-
-		double x = myOpMode.gamepad1.left_stick_x;
-		double y = myOpMode.gamepad1.left_stick_y;
-
-        // Scale the values so neither exceed +/- 1.0
-        double max = Math.max(Math.abs(left), Math.abs(right));
-        if (max > 1.0)
-        {
-            left /= max;
-            right /= max;
-        }
-
-        // Use existing function to drive both wheels.
-        setDrivePower(1);
-    }
-
-    /**
      * Pass the requested wheel motor powers to the appropriate hardware drive motors.
      *
      * @param power     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      */
     public void setDrivePower(double power) {
         // Output the values to the motor drives.
-		leftFrontDrive.setPower(power);
-		leftBackDrive.setPower(power);
-		rightFrontDrive.setPower(power);
-		rightBackDrive .setPower(power);
+		setDrivePower(power, power, power, power);
+    }
+
+    /**
+     * Pass the requested wheel motor powers to the appropriate hardware drive motors.
+     *
+     * @param leftFront     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
+     * @param leftBack     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
+     * @param rightFront     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
+     * @param rightBack     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
+     */
+    public void setDrivePower(double leftFront, double leftBack, double rightFront, double rightBack) {
+        // Output the values to the motor drives.
+        leftFrontDrive.setPower(leftFront);
+        leftBackDrive.setPower(leftBack);
+        rightFrontDrive.setPower(rightFront);
+        rightBackDrive .setPower(rightBack);
+    }
+
+    /**
+     * Pass the requested wheel motor powers to the appropriate hardware drive motors.
+     *
+     * @param inches the number of inches to move
+     * @param power     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
+     */
+    public void driveForInches(int inches, double power){
+        double targetPosition;
+        setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        targetPosition = leftFrontDrive.getCurrentPosition() + (inches*CPI);
+
+        leftFrontDrive.setTargetPosition((int)targetPosition);
+        leftBackDrive.setTargetPosition((int)targetPosition);
+        rightFrontDrive.setTargetPosition((int)targetPosition);
+        rightBackDrive.setTargetPosition((int)targetPosition);
+
+        setDrivePower(power);
+
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION));
+
+        while(leftFrontDrive.isBusy() || leftBackDrive.isBusy() || rightFrontDrive.isBusy() || rightBackDrive.isBusy()){
+
+        }
+    }
+
+    public void setDriveMotorMode(DcMotor.RunMode runMode){
+        leftFrontDrive.setMode(runMode);
+        leftBackDrive.setMode(runMode);
+        rightFrontDrive.setMode(runMode);
+        rightBackDrive.setMode(runMode);
     }
 }
