@@ -116,7 +116,7 @@ public class CalamariRobot {
         // Combine drive and turn for blended motion.
         double left  = Drive + Turn;
         double right = Drive - Turn;
-		myopMode.gamepad1.
+		//myopMode.gamepad1.
         // Scale the values so neither exceed +/- 1.0
         double max = Math.max(Math.abs(left), Math.abs(right));
         if (max > 1.0)
