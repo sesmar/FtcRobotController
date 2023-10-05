@@ -167,10 +167,11 @@ public class CalamariRobot {
 
         setDrivePower(power);
 
-        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION));
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while(leftFrontDrive.isBusy() || leftBackDrive.isBusy() || rightFrontDrive.isBusy() || rightBackDrive.isBusy()){
-
+            myOpMode.telemetry.addData("Status", "Driving");
+            myOpMode.telemetry.update();
         }
     }
 
