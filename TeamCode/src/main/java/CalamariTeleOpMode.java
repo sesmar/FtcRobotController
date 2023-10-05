@@ -58,6 +58,29 @@ public class CalamariTeleOpMode extends LinearOpMode {
 				telemetry.addData("y2", "%.2f", y2);
 				telemetry.update();
 			}
+
+			double g2y1 = gamepad2.right_stick_y;
+			if((g2y1>0 && !robot.liftts.isPressed()) || g2y1<=0) {
+				robot.liftMotor.setPower(g2y1);
+			}
+			else{
+				robot.liftMotor.setPower(0);
+			}
+
+
+			if(gamepad2.b){
+				robot.driveForInches(9, 1);
+
+			}
+			if(gamepad2.y){
+				robot.turnRight(9, 1);
+
+			}
+
+			if(gamepad2.x){
+				robot.turnLeft(9, 1);
+
+			}
 		}
 	}
 }

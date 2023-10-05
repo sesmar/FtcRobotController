@@ -30,6 +30,7 @@ package Common;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /*
  * This file works in conjunction with the External Hardware Class sample called: ConceptExternalHardwareClass.java
@@ -62,14 +63,18 @@ public class CalamariRobot {
     public DcMotor rightBackDrive  = null;
     public DcMotor liftMotor = null;
 
+    public TouchSensor liftts;  // Touch sensor Object
+
     //define static variables for use within the program
     //Wheel Diameter
     public static final double wheelDiameter = 2.875;
+
+    public static final double wheelCircumference = Math.PI * wheelDiameter;
     //Counts Per Revolution for the Drive Motors
-    public static  final double CPR = 560;
+    public static final double CPR = 560;
 
     //Count Per Inch for the Drive Motors
-    public static final double CPI = CPR/ wheelDiameter;
+    public static final double CPI = CPR/ wheelCircumference;
 
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
@@ -85,13 +90,15 @@ public class CalamariRobot {
      */
     public void init()    {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        leftFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "LFM");
+        //leftFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "LFM");
+        leftFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "lfm");
 		leftBackDrive  = myOpMode.hardwareMap.get(DcMotor.class, "LBM");
 
         rightFrontDrive = myOpMode.hardwareMap.get(DcMotor.class, "RFM");
 		rightBackDrive = myOpMode.hardwareMap.get(DcMotor.class, "RBM");
 
         liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift");
+        liftts = myOpMode.hardwareMap.get(TouchSensor.class,"LiftS");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -102,10 +109,7 @@ public class CalamariRobot {
 		rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
 		rightBackDrive .setDirection(DcMotor.Direction.FORWARD);
 
-        leftFrontDrive.setPower(0);
-        leftBackDrive.setPower(0);
-        rightFrontDrive.setPower(0);
-        rightBackDrive.setPower(0);
+        stopRobot();
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();
@@ -165,9 +169,12 @@ public class CalamariRobot {
 
         while(leftFrontDrive.isBusy() || leftBackDrive.isBusy() || rightFrontDrive.isBusy() || rightBackDrive.isBusy()){
             myOpMode.telemetry.addData("Status", "Driving");
+            myOpMode.telemetry.addData("Left Front Power", "%.2f", leftFrontDrive.getPower());
+            myOpMode.telemetry.addData("Right Front Power", "%.2f", rightFrontDrive.getPower());
             myOpMode.telemetry.update();
         }
 
+        stopRobot();
         setDriveMotorMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
@@ -192,5 +199,31 @@ public class CalamariRobot {
 
         correctedTargetPosition = rightBackDrive.getCurrentPosition() + targetPosition;
         rightBackDrive.setTargetPosition((int)correctedTargetPosition);
+    }
+
+    public void turnLeft(int seconds, double power){
+        myOpMode.resetRuntime();
+
+        while (myOpMode.getRuntime() < seconds) {
+            leftFrontDrive.setPower(-power);
+            leftBackDrive.setPower(-power);
+            rightFrontDrive.setPower(power);
+            rightBackDrive.setPower(power);
+        }
+
+        stopRobot();
+    }
+
+    public void turnRight(int seconds, double power){
+        myOpMode.resetRuntime();
+
+        while (myOpMode.getRuntime() < seconds) {
+            leftFrontDrive.setPower(power);
+            leftBackDrive.setPower(power);
+            rightFrontDrive.setPower(-power);
+            rightBackDrive.setPower(-power);
+        }
+
+        stopRobot();
     }
 }
