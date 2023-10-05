@@ -64,12 +64,12 @@ public class CalamariRobot {
 
     //define static variables for use within the program
     //Wheel Diameter
-    public static final double wheelDiamater = 2.875;
+    public static final double wheelDiameter = 2.875;
     //Counts Per Revolution for the Drive Motors
     public static  final double CPR = 560;
 
     //Count Per Inch for the Drive Motors
-    public static final double CPI = CPR/wheelDiamater;
+    public static final double CPI = CPR/ wheelDiameter;
 
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
@@ -155,15 +155,9 @@ public class CalamariRobot {
      * @param power     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      */
     public void driveForInches(int inches, double power){
-        double targetPosition;
         setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        targetPosition = leftFrontDrive.getCurrentPosition() + (inches*CPI);
-
-        leftFrontDrive.setTargetPosition((int)targetPosition);
-        leftBackDrive.setTargetPosition((int)targetPosition);
-        rightFrontDrive.setTargetPosition((int)targetPosition);
-        rightBackDrive.setTargetPosition((int)targetPosition);
+        setDriveMotorsTargetPosition(inches*CPI);
 
         setDrivePower(power);
 
@@ -173,6 +167,8 @@ public class CalamariRobot {
             myOpMode.telemetry.addData("Status", "Driving");
             myOpMode.telemetry.update();
         }
+
+        setDriveMotorMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void setDriveMotorMode(DcMotor.RunMode runMode){
@@ -180,5 +176,21 @@ public class CalamariRobot {
         leftBackDrive.setMode(runMode);
         rightFrontDrive.setMode(runMode);
         rightBackDrive.setMode(runMode);
+    }
+
+    public void setDriveMotorsTargetPosition(double targetPosition) {
+        double correctedTargetPosition = 0.0;
+
+        correctedTargetPosition = leftFrontDrive.getCurrentPosition() + targetPosition;
+        leftFrontDrive.setTargetPosition((int)correctedTargetPosition);
+
+        correctedTargetPosition = leftBackDrive.getCurrentPosition() + targetPosition;
+        leftBackDrive.setTargetPosition((int)correctedTargetPosition);
+
+        correctedTargetPosition = rightFrontDrive.getCurrentPosition() + targetPosition;
+        rightFrontDrive.setTargetPosition((int)correctedTargetPosition);
+
+        correctedTargetPosition = rightBackDrive.getCurrentPosition() + targetPosition;
+        rightBackDrive.setTargetPosition((int)correctedTargetPosition);
     }
 }

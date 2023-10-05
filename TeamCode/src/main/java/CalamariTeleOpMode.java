@@ -6,13 +6,14 @@ import Common.CalamariRobot;
 @TeleOp(name="Calamari: TeleOpMode", group="Linear OpMode")
 public class CalamariTeleOpMode extends LinearOpMode {
 
+	private static final double fortyFiveRads = -Math.PI/4;
+	private static final double cosine45 = Math.cos(fortyFiveRads);
+	private static final double sine45 = Math.sin(fortyFiveRads);
+
 	CalamariRobot robot = new CalamariRobot(this);
 
 	@Override
 	public void runOpMode() {
-		double fortyFiveRads = -Math.PI/4;
-		double cosine45 = Math.cos(fortyFiveRads);
-		double sine45 = Math.sin(fortyFiveRads);
 
 		robot.init();
 
@@ -26,7 +27,7 @@ public class CalamariTeleOpMode extends LinearOpMode {
 			double x1; //left/right
 			double y1; //forward/back
 			double x2; //rotated 45 degrees counterclockwise
-			double y2; //rotates 45 degress counterclockwise
+			double y2; //rotates 45 degrees counterclockwise
 			double spin  = gamepad1.right_stick_x;
 
 			if (Math.abs(spin) > 0.1){
