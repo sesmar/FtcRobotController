@@ -31,10 +31,7 @@ public class CalamariTeleOpMode extends LinearOpMode {
 			double spin  = gamepad1.right_stick_x;
 
 			if (Math.abs(spin) > 0.1){
-				robot.leftFrontDrive.setPower(spin);
-				robot.leftBackDrive.setPower(spin);
-				robot.rightFrontDrive.setPower(-spin);
-				robot.rightBackDrive.setPower(-spin);
+				robot.driveTrain.setPower(spin, spin, -spin, -spin);
 
 				telemetry.addData("spin", "%.2f", spin);
 				telemetry.update();
@@ -46,11 +43,7 @@ public class CalamariTeleOpMode extends LinearOpMode {
 				x2 = x1 * cosine45 - y1 * sine45;
 				y2 = y1 * cosine45 + x1 * sine45;
 
-				robot.leftFrontDrive.setPower(x2);
-				robot.rightBackDrive.setPower(x2);
-
-				robot.leftBackDrive.setPower(y2);
-				robot.rightFrontDrive.setPower(y2);
+				robot.driveTrain.setPower(x2, y2, y2, x2);
 
 				telemetry.addData("x1", "%.2f", x1);
 				telemetry.addData("y1", "%.2f", y1);
@@ -60,6 +53,7 @@ public class CalamariTeleOpMode extends LinearOpMode {
 			}
 
 			double g2y1 = gamepad2.right_stick_y;
+
 			if((g2y1>0 && !robot.liftts.isPressed()) || g2y1<=0) {
 				robot.liftMotor.setPower(g2y1);
 			}
@@ -67,19 +61,16 @@ public class CalamariTeleOpMode extends LinearOpMode {
 				robot.liftMotor.setPower(0);
 			}
 
-
 			if(gamepad2.b){
-				robot.driveForInches(9, 1);
-
+				robot.driveTrain.driveForInches(9, 1);
 			}
-			if(gamepad2.y){
-				robot.turnRight(9, 1);
 
+			if(gamepad2.y){
+				robot.driveTrain.turn(9, 1, this);
 			}
 
 			if(gamepad2.x){
-				robot.turnLeft(9, 1);
-
+				robot.driveTrain.turn(9, -1, this);
 			}
 		}
 	}
