@@ -14,9 +14,8 @@ public class CalamariRobot {
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
 	public MecanumDriveTrain driveTrain;
-    public DcMotor liftMotor = null;
 
-    public TouchSensor liftts;  // Touch sensor Object
+	public LiftArm liftArm;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
@@ -30,17 +29,21 @@ public class CalamariRobot {
      * All of the hardware devices are accessed via the hardware map, and initialized.
      */
     public void init()    {
-		// Define and Initialize Motors (note: need to use reference to actual OpMode).
+		// Define and Initialize the DriveTrain
 		DcMotor leftFrontDrive   = myOpMode.hardwareMap.get(DcMotor.class, "lfm");
 		//leftFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "LFM");
 		DcMotor rightFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "RFM");
 		DcMotor leftBackDrive   = myOpMode.hardwareMap.get(DcMotor.class, "LBM");
 		DcMotor rightBackDrive  = myOpMode.hardwareMap.get(DcMotor.class, "RBM");
 
-		driveTrain = new MecanumDriveTrain(leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive, myOpMode.telemetry);
+		driveTrain = new MecanumDriveTrain(leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive, myOpMode);
 
-        liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift");
-        liftts = myOpMode.hardwareMap.get(TouchSensor.class,"LiftS");
+		//Initialize the LiftArm
+        DcMotor liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift");
+        TouchSensor liftTsDown = myOpMode.hardwareMap.get(TouchSensor.class,"LiftS");
+		//TouchSensor liftTsUp = myOpMode.hardwareMap.get(TouchSensor.class,"LiftS");
+
+		liftArm = new LiftArm(liftMotor, liftTsDown, null, myOpMode.telemetry);
 
         driveTrain.stop();
 

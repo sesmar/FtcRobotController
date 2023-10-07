@@ -22,15 +22,14 @@ public class MecanumDriveTrain {
 	private final DcMotor _rightFront;
 	private final DcMotor _rightBack;
 
-	//telemetry for debugging output.
-	private final Telemetry _telemetry;
+	private final LinearOpMode _myOpMode;
 
-	public MecanumDriveTrain(DcMotor leftFront, DcMotor leftBack, DcMotor rightFront, DcMotor rightBack, Telemetry telemetry){
+	public MecanumDriveTrain(DcMotor leftFront, DcMotor leftBack, DcMotor rightFront, DcMotor rightBack, LinearOpMode myOpMode){
 		_leftFront = leftFront;
 		_leftBack = leftBack;
 		_rightFront = rightFront;
 		_rightBack = rightBack;
-		_telemetry = telemetry;
+		_myOpMode = myOpMode;
 
 		// To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
 		_leftFront.setDirection(DcMotor.Direction.REVERSE);
@@ -88,12 +87,12 @@ public class MecanumDriveTrain {
 		setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 		while(_leftFront.isBusy() || _leftBack.isBusy() || _rightFront.isBusy() || _rightBack.isBusy()){
-			_telemetry.addData("Status", "Driving");
-			_telemetry.addData("Left Front Power", "%.2f", _leftFront.getPower());
-			_telemetry.addData("Right Front Power", "%.2f", _rightFront.getPower());
-			_telemetry.addData("Left Back Power", "%.2f", _leftBack.getPower());
-			_telemetry.addData("Right Back Power", "%.2f", _rightBack.getPower());
-			_telemetry.update();
+			_myOpMode.telemetry.addData("Status", "Driving");
+			_myOpMode.telemetry.addData("Left Front Power", "%.2f", _leftFront.getPower());
+			_myOpMode.telemetry.addData("Right Front Power", "%.2f", _rightFront.getPower());
+			_myOpMode.telemetry.addData("Left Back Power", "%.2f", _leftBack.getPower());
+			_myOpMode.telemetry.addData("Right Back Power", "%.2f", _rightBack.getPower());
+			_myOpMode.telemetry.update();
 		}
 
 		stop();
@@ -121,10 +120,10 @@ public class MecanumDriveTrain {
 		_rightBack.setTargetPosition((int)correctedTargetPosition);
 	}
 
-	public void turn(int degrees, double power, LinearOpMode myOpMode){
-		myOpMode.resetRuntime();
+	public void turn(int degrees, double power){
+		_myOpMode.resetRuntime();
 
-		while (myOpMode.getRuntime() < degrees) {
+		while (_myOpMode.getRuntime() < degrees) {
 			_leftFront.setPower(-power);
 			_leftBack.setPower(-power);
 			_rightFront.setPower(power);
