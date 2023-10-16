@@ -28,6 +28,8 @@ public class CalamariTeleOpMode extends LinearOpMode {
 		while (opModeIsActive()) {
 			gamePad1.HandleInput();
 			gamePad2.HandleInput();
+
+			telemetry.update();
 		}
 	}
 }

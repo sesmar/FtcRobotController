@@ -6,6 +6,7 @@ package Common;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class CalamariRobot {
@@ -16,6 +17,10 @@ public class CalamariRobot {
 	public MecanumDriveTrain driveTrain;
 
 	public LiftArm liftArm;
+
+    public ChopChop chopChop;
+
+    public FunnelCake funnelCake;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
@@ -35,15 +40,23 @@ public class CalamariRobot {
 		DcMotor rightFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "RFM");
 		DcMotor leftBackDrive   = myOpMode.hardwareMap.get(DcMotor.class, "LBM");
 		DcMotor rightBackDrive  = myOpMode.hardwareMap.get(DcMotor.class, "RBM");
+        IMU imu = myOpMode.hardwareMap.get(IMU.class, "imu");
 
-		driveTrain = new MecanumDriveTrain(leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive, myOpMode);
+        CalamariGyro gyro = new CalamariGyro(imu);
+		driveTrain = new MecanumDriveTrain(leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive, gyro, myOpMode);
 
 		//Initialize the LiftArm
         DcMotor liftMotor   = myOpMode.hardwareMap.get(DcMotor.class, "lift");
         TouchSensor liftTsDown = myOpMode.hardwareMap.get(TouchSensor.class,"LiftS");
-		//TouchSensor liftTsUp = myOpMode.hardwareMap.get(TouchSensor.class,"LiftS");
+        TouchSensor liftTsUp = myOpMode.hardwareMap.get(TouchSensor.class,"LiftTS");
 
-		liftArm = new LiftArm(liftMotor, liftTsDown, null, myOpMode.telemetry);
+		liftArm = new LiftArm(liftMotor, liftTsDown, liftTsUp, myOpMode.telemetry);
+
+        DcMotor rotomcd = myOpMode.hardwareMap.get(DcMotor.class, "ChopChop");
+        chopChop = new ChopChop(rotomcd);
+
+        DcMotor motocd = myOpMode.hardwareMap.get(DcMotor.class, "FunnelCake");
+        funnelCake = new FunnelCake(motocd);
 
         driveTrain.stop();
 

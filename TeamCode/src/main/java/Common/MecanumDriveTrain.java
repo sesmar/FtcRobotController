@@ -22,13 +22,16 @@ public class MecanumDriveTrain {
 	private final DcMotor _rightFront;
 	private final DcMotor _rightBack;
 
+	private final CalamariGyro _gyro;
+
 	private final LinearOpMode _myOpMode;
 
-	public MecanumDriveTrain(DcMotor leftFront, DcMotor leftBack, DcMotor rightFront, DcMotor rightBack, LinearOpMode myOpMode){
+	public MecanumDriveTrain(DcMotor leftFront, DcMotor leftBack, DcMotor rightFront, DcMotor rightBack, CalamariGyro gyro, LinearOpMode myOpMode){
 		_leftFront = leftFront;
 		_leftBack = leftBack;
 		_rightFront = rightFront;
 		_rightBack = rightBack;
+		_gyro = gyro;
 		_myOpMode = myOpMode;
 
 		// To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -92,7 +95,6 @@ public class MecanumDriveTrain {
 			_myOpMode.telemetry.addData("Right Front Power", "%.2f", _rightFront.getPower());
 			_myOpMode.telemetry.addData("Left Back Power", "%.2f", _leftBack.getPower());
 			_myOpMode.telemetry.addData("Right Back Power", "%.2f", _rightBack.getPower());
-			_myOpMode.telemetry.update();
 		}
 
 		stop();
@@ -120,10 +122,15 @@ public class MecanumDriveTrain {
 		_rightBack.setTargetPosition((int)correctedTargetPosition);
 	}
 
+	/**
+	 * To turn left pass a positive value and to turn right pass a negative value
+	 *
+	 * @param degrees the number of degrees to turn
+	 * @param power     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
+	 */
 	public void turn(int degrees, double power){
-		_myOpMode.resetRuntime();
-
-		while (_myOpMode.getRuntime() < degrees) {
+		_gyro.resetYaw();
+		while (Math.abs(_gyro.getYaw()) < degrees) {
 			_leftFront.setPower(-power);
 			_leftBack.setPower(-power);
 			_rightFront.setPower(power);

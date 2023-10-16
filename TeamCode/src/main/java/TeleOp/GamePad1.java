@@ -29,7 +29,6 @@ public class GamePad1  implements IGamePad{
 			_robot.driveTrain.setPower(spin, spin, -spin, -spin);
 
 			_telemetry.addData("spin", "%.2f", spin);
-			_telemetry.update();
 		}
 		else {
 			x1 = _gamePad.left_stick_x;
@@ -44,7 +43,6 @@ public class GamePad1  implements IGamePad{
 			_telemetry.addData("y1", "%.2f", y1);
 			_telemetry.addData("x2", "%.2f", x2);
 			_telemetry.addData("y2", "%.2f", y2);
-			_telemetry.update();
 		}
 	}
 }

@@ -24,7 +24,9 @@ public class LiftArm {
 	}
 
 	public void Move(double power){
-		if((power>0 && !_tsDown.isPressed()) || power<=0) {
+		if((power>0 && !_tsDown.isPressed())
+				|| power==0
+				|| (power<0 && !_tsUp.isPressed())) {
 			_lift.setPower(power);
 		}
 		else{
