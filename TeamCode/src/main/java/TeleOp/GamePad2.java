@@ -23,9 +23,6 @@ public class GamePad2 implements IGamePad {
 
 		_robot.funnelCake.Move(_gamePad.left_stick_x);
 
-		if(_gamePad.b){
-			_robot.driveTrain.driveForInches(9, 1);
-		}
 
 		if(_gamePad.y){
 			_robot.driveTrain.turn(90, .25);

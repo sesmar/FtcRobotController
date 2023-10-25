@@ -11,6 +11,6 @@ public class ChopChop {
 
     public void Move(double power) {
 
-        _motorcd.setPower(power);
+        _motorcd.setPower(power/3);
     }
 }

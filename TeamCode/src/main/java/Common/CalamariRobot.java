@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class CalamariRobot {
-
     /* Declare OpMode members. */
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
@@ -21,6 +20,8 @@ public class CalamariRobot {
     public ChopChop chopChop;
 
     public FunnelCake funnelCake;
+
+    public TestServo testServo;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
