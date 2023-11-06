@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Common.CalamariRobot;
 
-@TeleOp(name="Calamari: TeleOpMode", group="Linear OpMode")
+@TeleOp(name="Calamari: TeleOpMode", group="Calamari")
 public class CalamariTeleOpMode extends LinearOpMode {
 	CalamariRobot robot = new CalamariRobot(this);
 	IGamePad gamePad1;

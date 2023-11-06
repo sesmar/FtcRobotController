@@ -7,7 +7,9 @@ package Common;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 public class CalamariRobot {
     /* Declare OpMode members. */
@@ -54,7 +56,8 @@ public class CalamariRobot {
 		liftArm = new LiftArm(liftMotor, liftTsDown, liftTsUp, myOpMode.telemetry);
 
         DcMotor rotomcd = myOpMode.hardwareMap.get(DcMotor.class, "ChopChop");
-        chopChop = new ChopChop(rotomcd);
+        Servo pincher = myOpMode.hardwareMap.get(Servo.class, "pincher");
+        chopChop = new ChopChop(rotomcd, pincher, myOpMode);
 
         DcMotor motocd = myOpMode.hardwareMap.get(DcMotor.class, "FunnelCake");
         funnelCake = new FunnelCake(motocd);

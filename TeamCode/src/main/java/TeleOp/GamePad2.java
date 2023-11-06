@@ -25,11 +25,19 @@ public class GamePad2 implements IGamePad {
 
 
 		if(_gamePad.y){
-			_robot.driveTrain.turn(90, .25);
+			_robot.chopChop.Open();
 		}
 
 		if(_gamePad.x){
-			_robot.driveTrain.turn(90, -0.25);
+			_robot.chopChop.Close();
+		}
+
+		if(_gamePad.a){
+			_robot.chopChop.ResetEncoder();
+		}
+
+		if(_gamePad.b){
+			_robot.chopChop.GetEncoderPosition();
 		}
 
 		_telemetry.addData("GamePad2", "Handle Input");

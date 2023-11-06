@@ -16,8 +16,13 @@ public class TestServo {
 
     public void runOpMode(){
 
-        //_servoTest=hardwareMap.get(TestServo.class, "testservo");
+        _servoTest=hardwareMap.get(TestServo.class, "testservo");
+
+        _servoTest.setPosition();
         //INITIALIZE VAR
+    }
+
+    private void setPosition() {
     }
 
 }

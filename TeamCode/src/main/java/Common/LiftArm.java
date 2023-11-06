@@ -27,7 +27,7 @@ public class LiftArm {
 		if((power>0 && !_tsDown.isPressed())
 				|| power==0
 				|| (power<0 && !_tsUp.isPressed())) {
-			_lift.setPower(power/3);
+			_lift.setPower(power);
 		}
 		else{
 			_lift.setPower(0);
