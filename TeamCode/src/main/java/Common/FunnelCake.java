@@ -11,6 +11,6 @@ public class FunnelCake {
 
     public void Move(double power) {
 
-        _motorcd.setPower(power/10);
+        _motorcd.setPower(power/3);
     }
 }
