@@ -39,6 +39,19 @@ public class GamePad1  implements IGamePad{
 
 			_robot.driveTrain.setPower(x2, y2, y2, x2);
 
+			if (_gamePad.right_trigger > 0) {
+				_robot.magicRope.Move(-_gamePad.right_trigger);
+			}
+
+			if (_gamePad.left_trigger > 0) {
+				_robot.magicRope.Move(_gamePad.left_trigger);
+			}
+
+			if (_gamePad.right_trigger == 0 && _gamePad.left_trigger == 0)
+			{
+				_robot.magicRope.Move(0);
+			}
+
 			_telemetry.addData("x1", "%.2f", x1);
 			_telemetry.addData("y1", "%.2f", y1);
 			_telemetry.addData("x2", "%.2f", x2);

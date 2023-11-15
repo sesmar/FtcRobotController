@@ -33,4 +33,27 @@ public class LiftArm {
 			_lift.setPower(0);
 		}
 	}
+
+	public int getPosition(){
+		return _lift.getCurrentPosition();
+	}
+
+	public void AutoArm(String direction){
+		_lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+		int targetPosition = -17319;
+		if(direction == "down"){ targetPosition = 17319;}
+		_lift.setTargetPosition(targetPosition);
+
+		_lift.setPower(1);
+
+		_lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+		while(_lift.isBusy()){
+			//
+		}
+
+		_lift.setPower(0);
+		_lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	}
 }

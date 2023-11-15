@@ -32,16 +32,18 @@ public class GamePad2 implements IGamePad {
 			_robot.chopChop.Close();
 		}
 
-		if(_gamePad.a){
-			_robot.chopChop.ResetEncoder();
+		if (_gamePad.b) {
+			_robot.airForceLaunch.Launch();
 		}
 
-		if(_gamePad.b){
-			_robot.chopChop.GetEncoderPosition();
+		if (_gamePad.a){
+			_robot.airForceLaunch.Reset();
 		}
 
 		_telemetry.addData("GamePad2", "Handle Input");
 		_telemetry.addData("X", "%b", _gamePad.x);
 		_telemetry.addData("Y", "%b", _gamePad.y);
+		_telemetry.addData("Funnel:", "%d", _robot.funnelCake.getPosition());
+		_telemetry.addData("Arm:", "%d", _robot.liftArm.getPosition());
 	}
 }

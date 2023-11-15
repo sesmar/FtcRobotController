@@ -19,9 +19,13 @@ public class CalamariRobot {
 
 	public LiftArm liftArm;
 
+    public MagicRope magicRope;
+
     public ChopChop chopChop;
 
     public FunnelCake funnelCake;
+
+    public AirForceLaunch airForceLaunch;
 
     public TestServo testServo;
 
@@ -62,6 +66,12 @@ public class CalamariRobot {
         DcMotor motocd = myOpMode.hardwareMap.get(DcMotor.class, "FunnelCake");
         funnelCake = new FunnelCake(motocd);
 
+        //Initialize the LiftArm
+        DcMotor ropeMotor   = myOpMode.hardwareMap.get(DcMotor.class, "MagicianRope");
+        magicRope = new MagicRope(ropeMotor);
+
+        Servo launcher = myOpMode.hardwareMap.get(Servo.class, "AirForceLaunch");
+        airForceLaunch = new AirForceLaunch(launcher);
         driveTrain.stop();
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");

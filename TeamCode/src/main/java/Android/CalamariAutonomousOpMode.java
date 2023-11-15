@@ -16,11 +16,19 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
         robot.init();
 
         waitForStart();
-        // run until the end of the match (driver presses STOP)
 
-        for (int i = 0; i < 4; i++) {
-            robot.driveTrain.driveForInches(18, .75);
-            robot.driveTrain.turn(90, .25);
-        }
+        robot.driveTrain.driveForInches(24, .75);
+        robot.driveTrain.turn(90, -.25);
+        robot.funnelCake.AutoCake("down");
+        robot.driveTrain.driveForInches(22, .75);
+
+        robot.liftArm.AutoArm("down");
+        robot.liftArm.AutoArm("up");
+        robot.funnelCake.AutoCake("up");
+
+        robot.driveTrain.turn(90, .25);
+        robot.driveTrain.driveForInches(23, -.75);
+        robot.driveTrain.turn(90, .25);
+        robot.driveTrain.driveForInches(21, -.75);
     }
 }
