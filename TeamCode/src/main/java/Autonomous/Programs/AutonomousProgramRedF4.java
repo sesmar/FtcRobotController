@@ -17,11 +17,11 @@ public class AutonomousProgramRedF4 implements IAutonomousProgram{
     public AutonomousProgramRedF4(CalamariRobot robot){
 		steps[0] = new AutonomousStepMoveFromStartingPosition(robot, "red");
 		steps[1] = new AutonomousStepLowerGuide(robot);
-		steps[2] = new AutonomousStepDriveToBoard(robot, 21);
+		steps[2] = new AutonomousStepDriveToBoard(robot, 20);
 		steps[3] = new AutonomousStepPositionArmForPlacement(robot);
 		steps[4] = new AutonomousStepDropPixel(robot);
 		steps[5] = new AutonomousStepPositionArmForParking(robot);
-		steps[6] = new AutonomousStepPark(robot, "left");
+		steps[6] = new AutonomousStepPark(robot, "right");
     }
 
     public void Run() throws InterruptedException {

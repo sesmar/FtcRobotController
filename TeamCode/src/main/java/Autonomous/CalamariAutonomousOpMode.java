@@ -27,6 +27,6 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
 
         waitForStart();
 
-        program.Run();
+        program2.Run();
     }
 }

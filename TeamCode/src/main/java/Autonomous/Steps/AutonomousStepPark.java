@@ -9,12 +9,13 @@ public class AutonomousStepPark implements IAutonomousStep{
 	private String _side = "left";
 	public AutonomousStepPark(CalamariRobot robot, String side){
 		_robot = robot;
+		_side = side;
 	}
 
 	public void Execute() {
 		double turnPower = CalamariRobot.turnPower;
 
-		if (_side == "left"){
+		if (Objects.equals(_side, "left")){
 			turnPower = -turnPower;
 		}
 

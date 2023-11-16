@@ -27,6 +27,7 @@ public class ChopChop {
 
         int targetPosition = _motorcd.getCurrentPosition()+increment;
 
+		/*
         if (power < 0)
         {
             if (targetPosition < upperLimit) {
@@ -39,6 +40,7 @@ public class ChopChop {
                 targetPosition = lowerLimit;
             }
         }
+		*/
 
         if (power != 0){
 

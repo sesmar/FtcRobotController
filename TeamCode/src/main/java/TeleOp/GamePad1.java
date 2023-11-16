@@ -35,13 +35,20 @@ public class GamePad1  implements IGamePad{
 			_telemetry.addData("spin", "%.2f", spin);
 		}
 		else {
+			int reduction = 2;
+			if (_gamePad.right_bumper){reduction = 1;}
+
 			x1 = _gamePad.left_stick_x;
 			y1 = -_gamePad.left_stick_y;
 
 			x2 = x1 * cosine45 - y1 * sine45;
 			y2 = y1 * cosine45 + x1 * sine45;
 
-			_robot.driveTrain.setPower(x2, y2, y2, x2);
+			_robot.driveTrain.setPower(
+				x2/reduction
+				, y2/reduction
+				, y2/reduction
+				, x2/reduction);
 
 			if (_gamePad.right_trigger > 0) {
 				_robot.magicRope.Move(-_gamePad.right_trigger);
