@@ -1,5 +1,5 @@
 package Autonomous;
 
 public interface IAutonomousProgram {
-    void Run();
+    void Run() throws InterruptedException;
 }

@@ -26,7 +26,11 @@ public class GamePad1  implements IGamePad{
 		double spin  = _gamePad.right_stick_x;
 
 		if (Math.abs(spin) > 0.1){
-			_robot.driveTrain.setPower(spin, spin, -spin, -spin);
+			int reduction = 2;
+
+			if (_gamePad.right_bumper){reduction = 1;}
+
+			_robot.driveTrain.setPower(spin/reduction, spin/reduction, -(spin/reduction), -(spin/reduction));
 
 			_telemetry.addData("spin", "%.2f", spin);
 		}

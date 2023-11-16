@@ -53,6 +53,30 @@ public class ChopChop {
         _motorcd.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    public void CorrectChop(String direction){
+
+        _motorcd.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        int targetPosition = -84;
+        if(direction == "down"){ targetPosition = -targetPosition;}
+        _motorcd.setTargetPosition(targetPosition);
+
+        _motorcd.setPower(.5);
+
+        _motorcd.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        _myOpMode.telemetry.addData("ChopChop: ", "Start Moving");
+
+        while(_motorcd.isBusy()){
+            //
+        }
+
+        _myOpMode.telemetry.addData("ChopChop: ", "Done Moving");
+
+        _motorcd.setPower(0);
+        _motorcd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
+
     public void Open()
     {
         _pincher.setPosition(.6);

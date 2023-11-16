@@ -12,9 +12,9 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         robot.init();
-        IAutonomousProgram program = new AutonomousProgramRedA4(robot);
+        IAutonomousProgram program = new AutonomousProgramRedF4(robot);
         waitForStart();
 
         program.Run();
