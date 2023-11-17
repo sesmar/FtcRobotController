@@ -21,9 +21,9 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         robot.init();
         IAutonomousProgram program1 = new AutonomousProgramRedF4(robot);
-		IAutonomousProgram program2 = new AutonomousProgramBlueA4(robot);
+		IAutonomousProgram program2 = new AutonomousProgramRedF2(robot);
 
-		IAutonomousProgram program3 = new AutonomousProgramRedF2(robot);
+		IAutonomousProgram program3 = new AutonomousProgramBlueA4(robot);
 		IAutonomousProgram program4 = new AutonomousProgramBlueA2(robot);
 
         waitForStart();
