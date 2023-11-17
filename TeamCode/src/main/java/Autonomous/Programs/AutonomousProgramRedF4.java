@@ -29,24 +29,5 @@ public class AutonomousProgramRedF4 implements IAutonomousProgram{
 		for (IAutonomousStep step : steps) {
 			step.Execute();
 		}
-
-        //_robot.driveTrain.driveForInches(24, drivePower);
-        //_robot.driveTrain.turn(90, -turnPower);
-		//_robot.funnelCake.AutoCake("down");
-        //_robot.driveTrain.driveForInches(21, drivePower);
-
-        //_robot.chopChop.Open();
-        //_robot.liftArm.AutoArm("down");
-        //_robot.chopChop.CorrectChop("up");
-        //_robot.chopChop.Close();
-        //sleep(750);
-
-        //_robot.liftArm.AutoArm("up");
-        //_robot.funnelCake.AutoCake("up");
-
-        //_robot.driveTrain.turn(90, turnPower);
-        //_robot.driveTrain.driveForInches(22, -drivePower);
-        //_robot.driveTrain.turn(90, turnPower);
-        //_robot.driveTrain.driveForInches(23, -drivePower);
     }
 }

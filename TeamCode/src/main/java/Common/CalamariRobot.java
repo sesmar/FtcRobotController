@@ -31,8 +31,6 @@ public class CalamariRobot {
 
     public AirForceLaunch airForceLaunch;
 
-    public TestServo testServo;
-
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
         myOpMode = opmode;
@@ -47,7 +45,6 @@ public class CalamariRobot {
     public void init()    {
 		// Define and Initialize the DriveTrain
 		DcMotor leftFrontDrive   = myOpMode.hardwareMap.get(DcMotor.class, "lfm");
-		//leftFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "LFM");
 		DcMotor rightFrontDrive  = myOpMode.hardwareMap.get(DcMotor.class, "RFM");
 		DcMotor leftBackDrive   = myOpMode.hardwareMap.get(DcMotor.class, "LBM");
 		DcMotor rightBackDrive  = myOpMode.hardwareMap.get(DcMotor.class, "RBM");
@@ -63,17 +60,20 @@ public class CalamariRobot {
 
 		liftArm = new LiftArm(liftMotor, liftTsDown, liftTsUp, myOpMode.telemetry);
 
+		//Initialize ChopChop
         DcMotor rotomcd = myOpMode.hardwareMap.get(DcMotor.class, "ChopChop");
         Servo pincher = myOpMode.hardwareMap.get(Servo.class, "pincher");
         chopChop = new ChopChop(rotomcd, pincher, myOpMode);
 
-        DcMotor motocd = myOpMode.hardwareMap.get(DcMotor.class, "FunnelCake");
-        funnelCake = new FunnelCake(motocd);
+		//Initialize FunnelCake
+        DcMotor motorcd = myOpMode.hardwareMap.get(DcMotor.class, "FunnelCake");
+        funnelCake = new FunnelCake(motorcd);
 
-        //Initialize the LiftArm
+        //Initialize the MagicRope
         DcMotor ropeMotor   = myOpMode.hardwareMap.get(DcMotor.class, "MagicianRope");
         magicRope = new MagicRope(ropeMotor);
 
+		//Initialize AirForceLaunch
         Servo launcher = myOpMode.hardwareMap.get(Servo.class, "AirForceLaunch");
         airForceLaunch = new AirForceLaunch(launcher);
         driveTrain.stop();
