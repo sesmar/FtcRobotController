@@ -18,6 +18,5 @@ public class AutonomousStepDropPixel implements IAutonomousStep{
 		while((_robot.myOpMode.getRuntime() - startTime) < 1){
 			//sleep(750);
 		}
-
 	}
 }
