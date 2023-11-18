@@ -13,6 +13,11 @@ public class AutonomousStepDropPixel implements IAutonomousStep{
 
 	public void Execute() throws InterruptedException {
 		_robot.chopChop.Close();
-		sleep(750);
+
+		double startTime = _robot.myOpMode.getRuntime();
+		while((_robot.myOpMode.getRuntime() - startTime) < 1){
+			//sleep(750);
+		}
+
 	}
 }

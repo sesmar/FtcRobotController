@@ -17,7 +17,7 @@ public class CalamariRobot {
 	public static final double turnPower = .4;
 
     /* Declare OpMode members. */
-    private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
+    public LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
 
 	public MecanumDriveTrain driveTrain;
 
