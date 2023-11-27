@@ -3,6 +3,7 @@ package Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import Autonomous.Programs.AutonomousProgramInitialize;
 import Autonomous.Programs.IAutonomousProgram;
 import Autonomous.Programs.AutonomousProgramRedF4;
 import Autonomous.Programs.AutonomousProgramBlueA4;
@@ -26,9 +27,11 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
 		IAutonomousProgram program3 = new AutonomousProgramBlueA4(robot);
 		IAutonomousProgram program4 = new AutonomousProgramBlueA2(robot);
 
+        IAutonomousProgram program5 = new AutonomousProgramInitialize(robot);
+
         waitForStart();
 
-        program2.Run();
+        program4.Run();
 
 
     }

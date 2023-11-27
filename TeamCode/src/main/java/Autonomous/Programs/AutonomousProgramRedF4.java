@@ -24,7 +24,7 @@ public class AutonomousProgramRedF4 implements IAutonomousProgram{
 		steps[4] = new AutonomousStepPositionLiftForPlacement(robot);
 		steps[5] = new AutonomousStepDropPixel(robot);
 		steps[6] = new AutonomousStepPositionArmForParking(robot);
-		steps[7] = new AutonomousStepPark(robot, "right");
+		steps[7] = new AutonomousStepPark(robot, "left");
     }
 
     public void Run() throws InterruptedException {

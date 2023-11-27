@@ -41,7 +41,7 @@ public class LiftArm {
 	public void AutoArm(String direction){
 		_lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-		int targetPosition = -14500;
+		int targetPosition = -15000;
 		if(direction == "down"){
 			targetPosition = -targetPosition;
 		}else {
