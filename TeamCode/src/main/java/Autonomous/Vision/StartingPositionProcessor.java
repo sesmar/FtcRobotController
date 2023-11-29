@@ -38,6 +38,9 @@ public class StartingPositionProcessor implements VisionProcessor {
 	public StartingBlock Block = StartingBlock.NONE;
 	public SpikeMarkPosition SpikeMark = SpikeMarkPosition.NONE;
 
+	public int countLeft = 0;
+	public int countRight = 0;
+
     public StartingPositionProcessor() {}
 
     @Override
@@ -49,7 +52,7 @@ public class StartingPositionProcessor implements VisionProcessor {
 		Mat hsvMat = new Mat();
 		Mat blueMat;
 		Mat redMat;
-		Mat returnMat;
+		Mat returnMat = new Mat();
 
         Imgproc.cvtColor(input, hsvMat, Imgproc.COLOR_RGB2HSV);
 		blueMat = generateBlueMat(hsvMat);
@@ -67,7 +70,7 @@ public class StartingPositionProcessor implements VisionProcessor {
 			Alliance = AllianceColor.RED;
 		}
 		else{
-			returnMat = input;
+			Imgproc.cvtColor(input, returnMat, Imgproc.COLOR_RGB2GRAY);
 		}
 
 		if (Alliance != AllianceColor.NONE){
@@ -111,11 +114,11 @@ public class StartingPositionProcessor implements VisionProcessor {
 
 	public SpikeMarkPosition determineTeamPropLocation(Mat binaryMat){
 		//Rectangle regions to be scanned
-		Point topLeft1 = new Point(10, 0);
-		Point bottomRight1 = new Point(40, 20);
+		Point topLeft1 = new Point(0, 0);
+		Point bottomRight1 = new Point(425, 479);
 
-		Point topLeft2 = new Point(10, 0);
-		Point bottomRight2 = new Point(40, 20);
+		Point topLeft2 = new Point(425, 0);
+		Point bottomRight2 = new Point(639, 479);
 
 		int w1 = 0;
 		int w2 = 0;
@@ -148,6 +151,9 @@ public class StartingPositionProcessor implements VisionProcessor {
 		}else{
 			spike = SpikeMarkPosition.LEFT;
 		}
+
+		countLeft = w1;
+		countRight = w2;
 
 		return spike;
 	}
