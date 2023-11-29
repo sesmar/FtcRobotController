@@ -12,13 +12,13 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 public class StartingPositionProcessor implements VisionProcessor {
-	enum AllianceColor {
+	public enum AllianceColor {
 		RED,
 		BLUE,
 		NONE
 	}
 
-	enum StartingBlock {
+	public enum StartingBlock {
 		A2,
 		A4,
 		F2,
@@ -27,7 +27,7 @@ public class StartingPositionProcessor implements VisionProcessor {
 	}
 
 
-	enum SpikeMarkPosition {
+	public enum SpikeMarkPosition {
 		RIGHT,
 		LEFT,
 		CENTER,
@@ -115,16 +115,16 @@ public class StartingPositionProcessor implements VisionProcessor {
 	public SpikeMarkPosition determineTeamPropLocation(Mat binaryMat){
 		//Rectangle regions to be scanned
 		Point topLeft1 = new Point(0, 0);
-		Point bottomRight1 = new Point(425, 479);
+		Point bottomRight1 = new Point(479, 424);
 
-		Point topLeft2 = new Point(425, 0);
-		Point bottomRight2 = new Point(639, 479);
+		Point topLeft2 = new Point(0, 425);
+		Point bottomRight2 = new Point(479, 639);
 
 		int w1 = 0;
 		int w2 = 0;
 
-		int w1Threshold = 0;
-		int w2Threshold = 0;
+		int w1Threshold = 5000;
+		int w2Threshold = 5000;
 
 		SpikeMarkPosition spike = SpikeMarkPosition.NONE;
 
@@ -145,9 +145,9 @@ public class StartingPositionProcessor implements VisionProcessor {
 		}
 
 		if (w1 > w1Threshold){
-			spike = SpikeMarkPosition.RIGHT;
-		}else if (w2 > w2Threshold){
 			spike = SpikeMarkPosition.CENTER;
+		}else if (w2 > w2Threshold){
+			spike = SpikeMarkPosition.RIGHT;
 		}else{
 			spike = SpikeMarkPosition.LEFT;
 		}

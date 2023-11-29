@@ -70,9 +70,16 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
         //zoomControl.setZoom(zoomControl.getMinZoom());
 
         waitForStart();
-		for(int i = 0; i < 8; i++) {
-			visionPortal.resumeLiveView();
-		}
+
+        if (spp.SpikeMark == StartingPositionProcessor.SpikeMarkPosition.CENTER){
+            robot.driveTrain.driveForInches(48, .50);
+        }else if (spp.SpikeMark == StartingPositionProcessor.SpikeMarkPosition.RIGHT){
+            robot.driveTrain.driveForInches(24, .50);
+            robot.driveTrain.turn(90, .45);
+        }else if (spp.SpikeMark == StartingPositionProcessor.SpikeMarkPosition.LEFT){
+            robot.driveTrain.driveForInches(24, .50);
+            robot.driveTrain.turn(90, -.45);
+        }
 
 		visionPortal.close();
     }
