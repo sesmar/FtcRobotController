@@ -52,7 +52,23 @@ public class StartingPositionProcessor implements VisionProcessor {
             }
         }
 
-        return input;
+        for(int i = (int) topLeft2.x; i <= (int)bottomRight2.x; i++){
+            for(int j = (int)topLeft2.y; j <= (int)bottomRight2.y; j++){
+                if (binaryMat.get(i,j)[0] == 255) {
+                    w2++;
+                }
+            }
+        }
+
+        for(int i = (int) topLeft3.x; i <= (int)bottomRight3.x; i++){
+            for(int j = (int)topLeft3.y; j <= (int)bottomRight3.y; j++){
+                if (binaryMat.get(i,j)[0] == 255) {
+                    w3++;
+                }
+            }
+        }
+
+        return binaryMat;
     }
 
     @Override
