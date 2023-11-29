@@ -105,6 +105,31 @@ public class MecanumDriveTrain {
 		setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 	}
 
+	public void driveSidewaysForInches(int inches, double power){
+		setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+		int targetPosition = (int)(inches*CPI);
+
+		if (power < 0) { targetPosition = targetPosition * -1; }
+
+		setTargetPosition(-targetPosition, targetPosition, targetPosition, -targetPosition);
+
+		setPower(power);
+
+		setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+		while(_leftFront.isBusy() || _leftBack.isBusy() || _rightFront.isBusy() || _rightBack.isBusy()){
+			_myOpMode.telemetry.addData("Status", "Driving");
+			_myOpMode.telemetry.addData("Left Front Power", "%.2f", _leftFront.getPower());
+			_myOpMode.telemetry.addData("Right Front Power", "%.2f", _rightFront.getPower());
+			_myOpMode.telemetry.addData("Left Back Power", "%.2f", _leftBack.getPower());
+			_myOpMode.telemetry.addData("Right Back Power", "%.2f", _rightBack.getPower());
+		}
+
+		stop();
+		setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	}
+
 	private void setMode(DcMotor.RunMode runMode){
 		_leftFront.setMode(runMode);
 		_leftBack.setMode(runMode);
@@ -113,16 +138,20 @@ public class MecanumDriveTrain {
 	}
 
 	private void setTargetPosition(double targetPosition) {
-		double correctedTargetPosition = _leftFront.getCurrentPosition() + targetPosition;
+		setTargetPosition(targetPosition, targetPosition, targetPosition, targetPosition);
+	}
+
+	private void setTargetPosition(double lfPosition, double lbPosition, double rfPosition, double rbPosition) {
+		double correctedTargetPosition = _leftFront.getCurrentPosition() + lfPosition;
 		_leftFront.setTargetPosition((int)correctedTargetPosition);
 
-		correctedTargetPosition = _leftBack.getCurrentPosition() + targetPosition;
+		correctedTargetPosition = _leftBack.getCurrentPosition() + lbPosition;
 		_leftBack.setTargetPosition((int)correctedTargetPosition);
 
-		correctedTargetPosition = _rightFront.getCurrentPosition() + targetPosition;
+		correctedTargetPosition = _rightFront.getCurrentPosition() + rfPosition;
 		_rightFront.setTargetPosition((int)correctedTargetPosition);
 
-		correctedTargetPosition = _rightBack.getCurrentPosition() + targetPosition;
+		correctedTargetPosition = _rightBack.getCurrentPosition() + rbPosition;
 		_rightBack.setTargetPosition((int)correctedTargetPosition);
 	}
 
