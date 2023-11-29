@@ -1,5 +1,7 @@
 package Autonomous.Programs;
 
+import java.util.ArrayList;
+
 import Autonomous.Steps.AutonomousStepDriveToBoard;
 import Autonomous.Steps.AutonomousStepDropPixel;
 import Autonomous.Steps.AutonomousStepLowerGuide;
@@ -12,18 +14,17 @@ import Autonomous.Steps.IAutonomousStep;
 import Common.CalamariRobot;
 
 public class AutonomousProgramRedF2 implements IAutonomousProgram {
-	private final int numberOfSteps = 8;
-	private final IAutonomousStep[] steps = new IAutonomousStep[numberOfSteps];
+	private final ArrayList<IAutonomousStep> steps = new ArrayList<>();
 
 	public AutonomousProgramRedF2(CalamariRobot robot){
-		steps[0] = new AutonomousStepMoveFromStartingPosition(robot, "red");
-		steps[1] = new AutonomousStepLowerGuide(robot);
-		steps[2] = new AutonomousStepPositionChopChopForPlacement(robot);
-		steps[3] = new AutonomousStepDriveToBoard(robot, 68);
-		steps[4] = new AutonomousStepPositionLiftForPlacement(robot);
-		steps[5] = new AutonomousStepDropPixel(robot);
-		steps[6] = new AutonomousStepPositionArmForParking(robot);
-		steps[7] = new AutonomousStepPark(robot, "right");
+		steps.add(new AutonomousStepMoveFromStartingPosition(robot, "red"));
+		steps.add(new AutonomousStepLowerGuide(robot));
+		steps.add(new AutonomousStepPositionChopChopForPlacement(robot));
+		steps.add(new AutonomousStepDriveToBoard(robot, 68));
+		steps.add(new AutonomousStepPositionLiftForPlacement(robot));
+		steps.add(new AutonomousStepDropPixel(robot));
+		steps.add(new AutonomousStepPositionArmForParking(robot));
+		steps.add(new AutonomousStepPark(robot, "right"));
 	}
 
 	public void Run() throws InterruptedException {

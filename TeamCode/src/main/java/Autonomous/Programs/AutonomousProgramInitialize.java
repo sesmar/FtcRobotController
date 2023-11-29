@@ -1,5 +1,7 @@
 package Autonomous.Programs;
 
+import java.util.ArrayList;
+
 import Autonomous.Steps.AutonomousStepDriveToBoard;
 import Autonomous.Steps.AutonomousStepDropPixel;
 import Autonomous.Steps.AutonomousStepLowerGuide;
@@ -12,14 +14,13 @@ import Autonomous.Steps.IAutonomousStep;
 import Common.CalamariRobot;
 
 public class AutonomousProgramInitialize implements IAutonomousProgram{
-    private final int numberOfSteps = 4;
-    private final IAutonomousStep[] steps = new IAutonomousStep[numberOfSteps];
+	private final ArrayList<IAutonomousStep> steps = new ArrayList<>();
 
     public AutonomousProgramInitialize(CalamariRobot robot){
-        steps[0] = new AutonomousStepDriveToBoard(robot, 24);
-        steps[1] = new AutonomousStepLowerGuide(robot);
-        steps[2] = new AutonomousStepPositionChopChopForPlacement(robot);
-        steps[3] = new AutonomousStepPositionLiftForPlacement(robot);
+        steps.add(new AutonomousStepDriveToBoard(robot, 24));
+        steps.add(new AutonomousStepLowerGuide(robot));
+        steps.add(new AutonomousStepPositionChopChopForPlacement(robot));
+        steps.add(new AutonomousStepPositionLiftForPlacement(robot));
     }
 
     public void Run() throws InterruptedException {

@@ -1,6 +1,7 @@
 package Autonomous.Vision;
 
 import android.graphics.Canvas;
+import android.media.Image;
 
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.vision.VisionProcessor;
@@ -11,23 +12,31 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 public class StartingPositionProcessor implements VisionProcessor {
-    private String location = "nothing";
-    public Scalar lower = new Scalar(0,0,0);
-    public Scalar upper = new Scalar(255,255,255);
+	enum AllianceColor {
+		RED,
+		BLUE,
+		NONE
+	}
 
-    private Mat hsvMat = new Mat();
-    private Mat binaryMat = new Mat();
-    private Mat maskedInputMat = new Mat();
+	enum StartingBlock {
+		A2,
+		A4,
+		F2,
+		F4,
+		NONE
+	}
 
-    //Rectangle regions to be scanned
-    private Point topLeft1 = new Point(10, 0);
-    private Point bottomRight1 = new Point(40, 20);
 
-    private Point topLeft2 = new Point(10, 0);
-    private Point bottomRight2 = new Point(40, 20);
+	enum SpikeMarkPosition {
+		RIGHT,
+		LEFT,
+		CENTER,
+		NONE
+	}
 
-    private Point topLeft3 = new Point(10, 0);
-    private Point bottomRight3 = new Point(40, 20);
+	public AllianceColor Alliance = AllianceColor.NONE;
+	public StartingBlock Block = StartingBlock.NONE;
+	public SpikeMarkPosition SpikeMark = SpikeMarkPosition.NONE;
 
     public StartingPositionProcessor() {}
 
@@ -37,42 +46,109 @@ public class StartingPositionProcessor implements VisionProcessor {
     }
     @Override
     public Mat processFrame(Mat input, long captureTimeNanos){
+		Mat hsvMat = new Mat();
+		Mat blueMat;
+		Mat redMat;
+		Mat returnMat;
+
         Imgproc.cvtColor(input, hsvMat, Imgproc.COLOR_RGB2HSV);
-        Core.inRange(hsvMat, lower, upper, binaryMat);
+		blueMat = generateBlueMat(hsvMat);
+		redMat = generateRedMat(hsvMat);
 
-        double w1 = 0;
-        double w2 = 0;
-        double w3 = 0;
+		int blueCount = Core.countNonZero(blueMat);
+		int redCount = Core.countNonZero(redMat);
 
-        for(int i = (int) topLeft1.x; i <= (int)bottomRight1.x; i++){
-            for(int j = (int)topLeft1.y; j <= (int)bottomRight1.y; j++){
-                if (binaryMat.get(i,j)[0] == 255) {
-                    w1++;
-                }
-            }
-        }
+		if (blueCount > redCount){
+			returnMat = blueMat;
+			Alliance = AllianceColor.BLUE;
+		}
+		else if (redCount > blueCount){
+			returnMat = redMat;
+			Alliance = AllianceColor.RED;
+		}
+		else{
+			returnMat = input;
+		}
 
-        for(int i = (int) topLeft2.x; i <= (int)bottomRight2.x; i++){
-            for(int j = (int)topLeft2.y; j <= (int)bottomRight2.y; j++){
-                if (binaryMat.get(i,j)[0] == 255) {
-                    w2++;
-                }
-            }
-        }
+		if (Alliance != AllianceColor.NONE){
+			SpikeMark = determineTeamPropLocation(returnMat);
+		}
 
-        for(int i = (int) topLeft3.x; i <= (int)bottomRight3.x; i++){
-            for(int j = (int)topLeft3.y; j <= (int)bottomRight3.y; j++){
-                if (binaryMat.get(i,j)[0] == 255) {
-                    w3++;
-                }
-            }
-        }
-
-        return binaryMat;
+        return returnMat;
     }
 
     @Override
     public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext) {
 
     }
+
+	public Mat generateBlueMat(Mat hsvMat){
+		Scalar blueLower = new Scalar(110,100,20);
+		Scalar blueUpper = new Scalar(130,255,255);
+		Mat blueMat = new Mat();
+		Core.inRange(hsvMat, blueLower, blueUpper, blueMat);
+
+		return blueMat;
+	}
+
+	public Mat generateRedMat(Mat hsvMat){
+		Mat redMat = new Mat();
+
+		Mat rm1 = new Mat();
+		Scalar redLower1 = new Scalar(0,100,20);
+		Scalar redUpper1 = new Scalar(10,255,255);
+
+		Mat rm2 = new Mat();
+		Scalar redLower2 = new Scalar(160,100,20);
+		Scalar redUpper2 = new Scalar(179,255,255);
+
+		Core.inRange(hsvMat, redLower1, redUpper1, rm1);
+		Core.inRange(hsvMat, redLower2, redUpper2, rm2);
+		Core.add(rm1, rm2, redMat);
+
+		return redMat;
+	}
+
+	public SpikeMarkPosition determineTeamPropLocation(Mat binaryMat){
+		//Rectangle regions to be scanned
+		Point topLeft1 = new Point(10, 0);
+		Point bottomRight1 = new Point(40, 20);
+
+		Point topLeft2 = new Point(10, 0);
+		Point bottomRight2 = new Point(40, 20);
+
+		int w1 = 0;
+		int w2 = 0;
+
+		int w1Threshold = 0;
+		int w2Threshold = 0;
+
+		SpikeMarkPosition spike = SpikeMarkPosition.NONE;
+
+		for(int i = (int) topLeft1.x; i <= (int)bottomRight1.x; i++){
+			for(int j = (int)topLeft1.y; j <= (int)bottomRight1.y; j++){
+				if (binaryMat.get(i,j)[0] == 255) {
+					w1++;
+				}
+			}
+		}
+
+		for(int i = (int) topLeft2.x; i <= (int)bottomRight2.x; i++){
+			for(int j = (int)topLeft2.y; j <= (int)bottomRight2.y; j++){
+				if (binaryMat.get(i,j)[0] == 255) {
+					w2++;
+				}
+			}
+		}
+
+		if (w1 > w1Threshold){
+			spike = SpikeMarkPosition.RIGHT;
+		}else if (w2 > w2Threshold){
+			spike = SpikeMarkPosition.CENTER;
+		}else{
+			spike = SpikeMarkPosition.LEFT;
+		}
+
+		return spike;
+	}
 }

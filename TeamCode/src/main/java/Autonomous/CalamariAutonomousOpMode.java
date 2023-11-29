@@ -68,7 +68,7 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
         waitForStart();
 
         //program4.Run();
-        robot.driveTrain.driveSidewaysForInches(12, .50);
+        //robot.driveTrain.driveSidewaysForInches(12, .50);
 
         visionPortal.close();
     }
