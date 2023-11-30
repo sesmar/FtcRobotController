@@ -28,11 +28,7 @@ import Common.CalamariRobot;
 public class CalamariAutonomousOpMode extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-
-    /**
-     * The variable to store our instance of the AprilTag processor.
-     */
-    private TfodProcessor tfod;
+    
 	private StartingPositionProcessor spp;
 
     /**
@@ -54,7 +50,6 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
 
         IAutonomousProgram program5 = new AutonomousProgramInitialize(robot);
 
-        tfod = TfodProcessor.easyCreateWithDefaults();
 		spp = new StartingPositionProcessor();
 
         // Create the vision portal the easy way.
@@ -63,7 +58,7 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
                     hardwareMap.get(WebcamName.class, "ItHasEYES"), spp);
         } else {
             visionPortal = VisionPortal.easyCreateWithDefaults(
-                    BuiltinCameraDirection.FRONT, tfod);
+                    BuiltinCameraDirection.FRONT, spp);
         }
 
         //PtzControl zoomControl = visionPortal.getCameraControl(PtzControl.class);
