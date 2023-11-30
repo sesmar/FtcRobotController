@@ -11,10 +11,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
+import Autonomous.Vision.StartingPositionProcessor;
+
 public class CalamariRobot {
 	/*Declare Static Variables*/
 	public static final double drivePower = .75;
 	public static final double turnPower = .4;
+
+	public Boolean hasVision = false;
 
     /* Declare OpMode members. */
     public LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
@@ -30,6 +36,8 @@ public class CalamariRobot {
     public FunnelCake funnelCake;
 
     public AirForceLaunch airForceLaunch;
+
+	public MyEyes myEyes;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
@@ -76,6 +84,13 @@ public class CalamariRobot {
 		//Initialize AirForceLaunch
         Servo launcher = myOpMode.hardwareMap.get(Servo.class, "AirForceLaunch");
         airForceLaunch = new AirForceLaunch(launcher);
+
+		if (hasVision) {
+			StartingPositionProcessor spp = new StartingPositionProcessor();
+			WebcamName itsEyes = myOpMode.hardwareMap.get(WebcamName.class, "ItHasEYES");
+			myEyes = new MyEyes(itsEyes, spp);
+		}
+
         driveTrain.stop();
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");

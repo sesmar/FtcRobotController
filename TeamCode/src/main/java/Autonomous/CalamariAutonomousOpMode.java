@@ -14,7 +14,9 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
+import Autonomous.Programs.AutonomousProgramBlue;
 import Autonomous.Programs.AutonomousProgramInitialize;
+import Autonomous.Programs.AutonomousProgramRed;
 import Autonomous.Programs.IAutonomousProgram;
 import Autonomous.Programs.AutonomousProgramRedF4;
 import Autonomous.Programs.AutonomousProgramBlueA4;
@@ -22,61 +24,40 @@ import Autonomous.Programs.AutonomousProgramRedF2;
 import Autonomous.Programs.AutonomousProgramBlueA2;
 
 import Autonomous.Vision.StartingPositionProcessor;
+import Common.AllianceColor;
 import Common.CalamariRobot;
+import Common.SpikeMarkPosition;
+import Common.StartingBlock;
 
 @Autonomous(name="Calamari: Autonomous Drive", group="Calamari", preselectTeleOp = "Calamari: TeleOpMode")
 public class CalamariAutonomousOpMode extends LinearOpMode {
-
-    private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    
-	private StartingPositionProcessor spp;
-
-    /**
-     * The variable to store our instance of the vision portal.
-     */
-    private VisionPortal visionPortal;
-
     CalamariRobot robot = new CalamariRobot(this);
 
 
     @Override
     public void runOpMode() throws InterruptedException {
+		robot.hasVision = true;
         robot.init();
-        IAutonomousProgram program1 = new AutonomousProgramRedF4(robot);
-		IAutonomousProgram program2 = new AutonomousProgramRedF2(robot);
+		StartingBlock startingBlock = StartingBlock.A2;
 
-		IAutonomousProgram program3 = new AutonomousProgramBlueA4(robot);
-		IAutonomousProgram program4 = new AutonomousProgramBlueA2(robot);
-
-        IAutonomousProgram program5 = new AutonomousProgramInitialize(robot);
-
-		spp = new StartingPositionProcessor();
-
-        // Create the vision portal the easy way.
-        if (USE_WEBCAM) {
-            visionPortal = VisionPortal.easyCreateWithDefaults(
-                    hardwareMap.get(WebcamName.class, "ItHasEYES"), spp);
-        } else {
-            visionPortal = VisionPortal.easyCreateWithDefaults(
-                    BuiltinCameraDirection.FRONT, spp);
-        }
-
-        //PtzControl zoomControl = visionPortal.getCameraControl(PtzControl.class);
-        //zoomControl.setZoom(zoomControl.getMinZoom());
+		IAutonomousProgram program = new AutonomousProgramInitialize(robot);
 
         waitForStart();
 
-        if (spp.SpikeMark == StartingPositionProcessor.SpikeMarkPosition.CENTER){
-            robot.driveTrain.driveForInches(48, .50);
-        }else if (spp.SpikeMark == StartingPositionProcessor.SpikeMarkPosition.RIGHT){
-            robot.driveTrain.driveForInches(24, .50);
-            robot.driveTrain.turn(90, .45);
-        }else if (spp.SpikeMark == StartingPositionProcessor.SpikeMarkPosition.LEFT){
-            robot.driveTrain.driveForInches(24, .50);
-            robot.driveTrain.turn(90, -.45);
-        }
+		if (robot.myEyes.getSpikeMark() == SpikeMarkPosition.NONE
+			|| robot.myEyes.getAlliance() == AllianceColor.NONE
+			|| startingBlock == StartingBlock.NONE)
+		{
+			program = new AutonomousProgramInitialize(robot);
+		}
 
-		visionPortal.close();
+		if (robot.myEyes.getAlliance() == AllianceColor.RED){
+			program = new AutonomousProgramRed(robot, startingBlock);
+		}else if (robot.myEyes.getAlliance() == AllianceColor.BLUE){
+			program = new AutonomousProgramBlue(robot, startingBlock);
+		}
+
+		program.Run();
+		robot.myEyes.close();
     }
-
 }

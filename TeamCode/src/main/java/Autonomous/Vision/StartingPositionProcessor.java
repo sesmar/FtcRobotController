@@ -11,28 +11,11 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import Common.AllianceColor;
+import Common.SpikeMarkPosition;
+import Common.StartingBlock;
+
 public class StartingPositionProcessor implements VisionProcessor {
-	public enum AllianceColor {
-		RED,
-		BLUE,
-		NONE
-	}
-
-	public enum StartingBlock {
-		A2,
-		A4,
-		F2,
-		F4,
-		NONE
-	}
-
-
-	public enum SpikeMarkPosition {
-		RIGHT,
-		LEFT,
-		CENTER,
-		NONE
-	}
 
 	public AllianceColor Alliance = AllianceColor.NONE;
 	public StartingBlock Block = StartingBlock.NONE;
@@ -126,7 +109,7 @@ public class StartingPositionProcessor implements VisionProcessor {
 		int w1Threshold = 5000;
 		int w2Threshold = 5000;
 
-		SpikeMarkPosition spike = SpikeMarkPosition.NONE;
+		SpikeMarkPosition spike;
 
 		for(int i = (int) topLeft1.x; i <= (int)bottomRight1.x; i++){
 			for(int j = (int)topLeft1.y; j <= (int)bottomRight1.y; j++){
