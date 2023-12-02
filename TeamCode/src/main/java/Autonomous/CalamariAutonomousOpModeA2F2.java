@@ -13,16 +13,16 @@ import Common.CalamariRobot;
 import Common.SpikeMarkPosition;
 import Common.StartingBlock;
 
-@Autonomous(name="Calamari: Autonomous Drive", group="Calamari", preselectTeleOp = "Calamari: TeleOpMode")
-public class CalamariAutonomousOpMode extends LinearOpMode {
-    CalamariRobot robot = new CalamariRobot(this);
+@Autonomous(name="Calamari: Autonomous Drive A2F2", group="Calamari", preselectTeleOp = "Calamari: TeleOpMode")
+public class CalamariAutonomousOpModeA2F2 extends LinearOpMode {
+	CalamariRobot robot = new CalamariRobot(this);
 
 
-    @Override
-    public void runOpMode() throws InterruptedException {
+	@Override
+	public void runOpMode() throws InterruptedException {
 		robot.hasVision = true;
-        robot.init();
-		StartingBlock startingBlock = StartingBlock.NONE;
+		robot.init();
+		StartingBlock startingBlock = StartingBlock.A2;
 
 		IAutonomousProgram program = new AutonomousProgramInitialize(robot);
 
@@ -43,5 +43,5 @@ public class CalamariAutonomousOpMode extends LinearOpMode {
 		}
 
 		program.Run();
-    }
+	}
 }

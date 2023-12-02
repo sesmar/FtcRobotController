@@ -22,8 +22,8 @@ public class FunnelCake {
     public void AutoCake(String direction){
         _motorcd.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        int targetPosition = -88;
-        if(direction == "down"){ targetPosition = 88;}
+        int targetPosition = -340;
+        if(direction == "down"){ targetPosition = 340;}
         _motorcd.setTargetPosition(targetPosition);
 
         _motorcd.setPower(.5);

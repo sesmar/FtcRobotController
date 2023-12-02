@@ -10,7 +10,7 @@ public class AutonomousStepPositionArmForParking implements IAutonomousStep{
 	}
 
 	public void Execute() throws InterruptedException{
-		_robot.liftArm.AutoArm("up");
+		_robot.liftArm.AutoArm("down");
 		_robot.funnelCake.AutoCake("up");
 	}
 

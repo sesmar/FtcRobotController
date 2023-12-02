@@ -11,22 +11,21 @@ public class AutonomousStepDriveToSpikeMark implements IAutonomousStep{
 	private final SpikeMarkPosition _spikeMark;
 	private final AllianceColor _alliance;
 
-	public AutonomousStepDriveToSpikeMark(CalamariRobot robot){
+	public AutonomousStepDriveToSpikeMark(CalamariRobot robot, AllianceColor alliance, SpikeMarkPosition spikeMark){
 		_robot = robot;
-		_spikeMark = robot.myEyes.getSpikeMark();
-		_alliance = robot.myEyes.getAlliance();
+		_spikeMark = spikeMark;
+		_alliance = alliance;
 	}
 	public void Execute(){
 		double turnPower = CalamariRobot.turnPower;
 		int inchesToDrive = 24;
 
-		if ((_alliance == AllianceColor.BLUE && _spikeMark == SpikeMarkPosition.LEFT)
-			|| (_alliance == AllianceColor.RED && _spikeMark == SpikeMarkPosition.RIGHT)){
+		if (_spikeMark == SpikeMarkPosition.LEFT){
 			turnPower = -turnPower;
 		}
 
 		if (_spikeMark == SpikeMarkPosition.CENTER) {
-			inchesToDrive = 48;
+			inchesToDrive = 44;
 		}
 
 		_robot.driveTrain.driveForInches(inchesToDrive, CalamariRobot.drivePower);

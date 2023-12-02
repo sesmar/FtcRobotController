@@ -40,6 +40,14 @@ public class GamePad2 implements IGamePad {
 			_robot.airForceLaunch.Reset();
 		}
 
+		if (_gamePad.right_bumper){
+			_robot.coinFlipper.Drop();
+		}
+
+		if (_gamePad.left_bumper){
+			_robot.coinFlipper.Secure();
+		}
+
 		_telemetry.addData("GamePad2", "Handle Input");
 		_telemetry.addData("X", "%b", _gamePad.x);
 		_telemetry.addData("Y", "%b", _gamePad.y);

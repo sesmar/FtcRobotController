@@ -39,6 +39,8 @@ public class CalamariRobot {
 
 	public MyEyes myEyes;
 
+	public CoinFlipper coinFlipper;
+
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
         myOpMode = opmode;
@@ -84,6 +86,10 @@ public class CalamariRobot {
 		//Initialize AirForceLaunch
         Servo launcher = myOpMode.hardwareMap.get(Servo.class, "AirForceLaunch");
         airForceLaunch = new AirForceLaunch(launcher);
+
+		Servo flipper = myOpMode.hardwareMap.get(Servo.class, "CoinFlip");
+		coinFlipper = new CoinFlipper(flipper);
+		coinFlipper.Secure();
 
 		if (hasVision) {
 			StartingPositionProcessor spp = new StartingPositionProcessor();

@@ -10,7 +10,15 @@ public class AutonomousStepDriveToBoard  implements IAutonomousStep{
 		_robot = robot;
 		_inches = inches;
 	}
-	public void Execute(){
-		_robot.driveTrain.driveForInches(_inches, CalamariRobot.drivePower);
+	public void Execute()
+	{
+		double drivePower = CalamariRobot.drivePower;
+
+		if(_inches < 0){
+			_inches = -_inches;
+			drivePower = -drivePower;
+		}
+		_robot.driveTrain.driveForInches(_inches, drivePower);
+
 	}
 }

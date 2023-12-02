@@ -162,7 +162,7 @@ public class MecanumDriveTrain {
 	 * @param power     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
 	 */
 	public void turn(int degrees, double power){
-		int drift = 10;
+		int drift = 12;
 		_gyro.resetYaw();
 		while (Math.abs(_gyro.getYaw()) < (Math.abs(degrees)-drift)) {
 			_leftFront.setPower(-power);

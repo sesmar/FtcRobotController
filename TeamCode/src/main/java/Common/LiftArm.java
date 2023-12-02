@@ -43,7 +43,7 @@ public class LiftArm {
 
 		int targetPosition = -15000;
 		if(direction == "down"){
-			targetPosition = -targetPosition;
+			targetPosition = -targetPosition/2;
 		}else {
 			targetPosition = (targetPosition/2);
 		}
