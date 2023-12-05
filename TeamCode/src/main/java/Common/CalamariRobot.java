@@ -71,6 +71,7 @@ public class CalamariRobot {
 		liftArm = new LiftArm(liftMotor, liftTsDown, liftTsUp, myOpMode.telemetry);
 
 		//Initialize ChopChop
+		//TODO: neck servo
         DcMotor rotomcd = myOpMode.hardwareMap.get(DcMotor.class, "ChopChop");
         Servo pincher = myOpMode.hardwareMap.get(Servo.class, "pincher");
         chopChop = new ChopChop(rotomcd, pincher, myOpMode);
@@ -90,7 +91,7 @@ public class CalamariRobot {
 		Servo flipper = myOpMode.hardwareMap.get(Servo.class, "CoinFlip");
 		coinFlipper = new CoinFlipper(flipper);
 		coinFlipper.Secure();
-
+		//TODO: eggdrop servo
 		if (hasVision) {
 			StartingPositionProcessor spp = new StartingPositionProcessor();
 			WebcamName itsEyes = myOpMode.hardwareMap.get(WebcamName.class, "ItHasEYES");
