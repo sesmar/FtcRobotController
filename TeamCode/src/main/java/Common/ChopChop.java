@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class ChopChop {
-    private final DcMotor _motorcd;
+    private final Servo _neck;
     private final Servo _pincher;
 
     private final LinearOpMode _myOpMode;
@@ -13,69 +13,36 @@ public class ChopChop {
     private int lowerLimit = -47;
     private int upperLimit = -86;
 
-    public ChopChop (DcMotor motorcd, Servo pincher, LinearOpMode myOpMode){
-        _motorcd = motorcd;
+    public ChopChop (Servo neck, Servo pincher, LinearOpMode myOpMode){
+        _neck = neck;
         _pincher = pincher;
         _myOpMode = myOpMode;
 
-        _motorcd.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void Move(double power) {
-        int increment = 20;
-        increment = (int)(increment * power);
+        double increment = .05;
+        increment = (increment * power);
 
-        int targetPosition = _motorcd.getCurrentPosition()+increment;
+        double targetPosition = _neck.getPosition()+increment;
 
-		/*
-        if (power < 0)
-        {
-            if (targetPosition < upperLimit) {
-                targetPosition = upperLimit;
-            }
-        }
-        else if (power > 0)
-        {
-            if (targetPosition > lowerLimit) {
-                targetPosition = lowerLimit;
-            }
-        }
-		*/
+		if(targetPosition < 0){
+			targetPosition = 0;
+		} else if(targetPosition > 1){
+			targetPosition = 1;
+		}
+        _neck.setPosition(targetPosition);
 
-        if (power != 0){
-
-            _motorcd.setTargetPosition(targetPosition);
-        }
-        else{
-            _motorcd.setTargetPosition(_motorcd.getCurrentPosition());
-            power = 1;
-        }
-
-        _motorcd.setPower(power);
-        _motorcd.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void CorrectChop(String direction){
 
-        _motorcd.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        if(direction == "up"){
+			_neck.setPosition(.5);
+		}else {
+			_neck.setPosition(0);
+		}
 
-        int targetPosition = -84;
-        if(direction == "down"){ targetPosition = -targetPosition;}
-        _motorcd.setTargetPosition(targetPosition);
-
-        _motorcd.setPower(.5);
-
-        _motorcd.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        _myOpMode.telemetry.addData("ChopChop: ", "Start Moving");
-
-        while(_motorcd.isBusy()){
-            //
-        }
-
-        _myOpMode.telemetry.addData("ChopChop: ", "Done Moving");
-
-        _motorcd.setPower(0);
-        _motorcd.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -89,13 +56,4 @@ public class ChopChop {
         _pincher.setPosition(.2);
     }
 
-    public void ResetEncoder()
-    {
-        _motorcd.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void GetEncoderPosition()
-    {
-        _myOpMode.telemetry.addData("ChopChop", "%d", _motorcd.getCurrentPosition());
-    }
 }

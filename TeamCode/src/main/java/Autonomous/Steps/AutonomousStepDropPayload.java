@@ -10,7 +10,7 @@ public class AutonomousStepDropPayload implements IAutonomousStep{
 		_robot = robot;
 	}
 	public void Execute(){
-		_robot.coinFlipper.Drop();
+		_robot.eggDropper.Drop(1);
 		double startTime = _robot.myOpMode.getRuntime();
 		while((_robot.myOpMode.getRuntime() - startTime) < 1){
 			//sleep(750);

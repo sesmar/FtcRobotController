@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
@@ -39,7 +38,7 @@ public class CalamariRobot {
 
 	public MyEyes myEyes;
 
-	public CoinFlipper coinFlipper;
+	public EggDropper eggDropper;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     public CalamariRobot (LinearOpMode opmode) {
@@ -71,10 +70,9 @@ public class CalamariRobot {
 		liftArm = new LiftArm(liftMotor, liftTsDown, liftTsUp, myOpMode.telemetry);
 
 		//Initialize ChopChop
-		//TODO: neck servo
-        DcMotor rotomcd = myOpMode.hardwareMap.get(DcMotor.class, "ChopChop");
+		Servo neck = myOpMode.hardwareMap.get(Servo.class, "neck");
         Servo pincher = myOpMode.hardwareMap.get(Servo.class, "pincher");
-        chopChop = new ChopChop(rotomcd, pincher, myOpMode);
+        chopChop = new ChopChop(neck, pincher, myOpMode);
 
 		//Initialize FunnelCake
         DcMotor motorcd = myOpMode.hardwareMap.get(DcMotor.class, "FunnelCake");
@@ -88,10 +86,12 @@ public class CalamariRobot {
         Servo launcher = myOpMode.hardwareMap.get(Servo.class, "AirForceLaunch");
         airForceLaunch = new AirForceLaunch(launcher);
 
-		Servo flipper = myOpMode.hardwareMap.get(Servo.class, "CoinFlip");
-		coinFlipper = new CoinFlipper(flipper);
-		coinFlipper.Secure();
-		//TODO: eggdrop servo
+		Servo eggDrop1 = myOpMode.hardwareMap.get(Servo.class, "eggdrop1");
+		Servo eggDrop2 = myOpMode.hardwareMap.get(Servo.class, "eggdrop2");
+		eggDropper = new EggDropper(eggDrop1,eggDrop2);
+		eggDropper.Secure(1);
+		eggDropper.Secure(2);
+
 		if (hasVision) {
 			StartingPositionProcessor spp = new StartingPositionProcessor();
 			WebcamName itsEyes = myOpMode.hardwareMap.get(WebcamName.class, "ItHasEYES");

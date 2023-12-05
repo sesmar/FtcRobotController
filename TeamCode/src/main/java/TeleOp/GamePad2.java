@@ -41,11 +41,11 @@ public class GamePad2 implements IGamePad {
 		}
 
 		if (_gamePad.right_bumper){
-			_robot.coinFlipper.Drop();
+			_robot.eggDropper.Drop(2);
 		}
 
 		if (_gamePad.left_bumper){
-			_robot.coinFlipper.Secure();
+			_robot.eggDropper.Secure(2);
 		}
 
 		_telemetry.addData("GamePad2", "Handle Input");
