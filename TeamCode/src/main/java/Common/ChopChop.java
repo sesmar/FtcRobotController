@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.Objects;
+
 public class ChopChop {
     private final Servo _neck;
     private final Servo _pincher;
@@ -21,7 +23,7 @@ public class ChopChop {
     }
 
     public void Move(double power) {
-        double increment = .05;
+        double increment = .02;
         increment = (increment * power);
 
         double targetPosition = _neck.getPosition()+increment;
@@ -37,8 +39,8 @@ public class ChopChop {
 
     public void CorrectChop(String direction){
 
-        if(direction == "up"){
-			_neck.setPosition(.5);
+        if(Objects.equals(direction, "up")){
+			_neck.setPosition(.570);
 		}else {
 			_neck.setPosition(0);
 		}

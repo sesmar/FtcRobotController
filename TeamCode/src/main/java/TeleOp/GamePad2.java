@@ -48,6 +48,10 @@ public class GamePad2 implements IGamePad {
 			_robot.eggDropper.Secure(2);
 		}
 
+		if (_gamePad.left_stick_button){
+			_robot.chopChop.CorrectChop("up");
+		}
+
 		_telemetry.addData("GamePad2", "Handle Input");
 		_telemetry.addData("X", "%b", _gamePad.x);
 		_telemetry.addData("Y", "%b", _gamePad.y);
