@@ -11,6 +11,7 @@ import Autonomous.Steps.AutonomousStepPositionArmForParking;
 import Autonomous.Steps.AutonomousStepPositionChopChopForPlacement;
 import Autonomous.Steps.AutonomousStepPrepForParkA2F2;
 import Autonomous.Steps.AutonomousStepPrepForParkA4F4;
+import Autonomous.Steps.AutonomousStepTurnRobot;
 import Autonomous.Steps.IAutonomousStep;
 import Common.AllianceColor;
 import Common.CalamariRobot;
@@ -33,6 +34,7 @@ public class AutonomousProgramBlue implements IAutonomousProgram{
 			steps.add(new AutonomousStepLowerGuide(robot));
 			steps.add(new AutonomousStepPositionChopChopForPlacement(robot));
 			steps.add(new AutonomousStepDriveToBoard(robot, -72));
+
 		}
 		else{
 			steps.add(new AutonomousStepPrepForParkA4F4(robot, AllianceColor.BLUE, robot.myEyes.getSpikeMark()));
@@ -42,6 +44,11 @@ public class AutonomousProgramBlue implements IAutonomousProgram{
 		}
 
 		steps.add(new AutonomousStepPositionArmForParking(robot));
+
+		if (startingBlock == StartingBlock.A2 || startingBlock == StartingBlock.F2) {
+			steps.add(new AutonomousStepTurnRobot(robot, 40));
+		}
+
 		steps.add(new AutonomousStepDriveToBoard(robot, -6));
 		steps.add(new AutonomousStepDropPayload(robot,2));
 	}
