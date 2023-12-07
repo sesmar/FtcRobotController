@@ -40,7 +40,7 @@ public class ChopChop {
     public void CorrectChop(String direction){
 
         if(Objects.equals(direction, "up")){
-			_neck.setPosition(.570);
+			_neck.setPosition(.55);
 		}else {
 			_neck.setPosition(0);
 		}

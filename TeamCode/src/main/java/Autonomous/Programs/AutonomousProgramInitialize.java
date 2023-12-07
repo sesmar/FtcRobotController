@@ -3,11 +3,7 @@ package Autonomous.Programs;
 import java.util.ArrayList;
 
 import Autonomous.Steps.AutonomousStepDriveToBoard;
-import Autonomous.Steps.AutonomousStepDropPixel;
 import Autonomous.Steps.AutonomousStepLowerGuide;
-import Autonomous.Steps.AutonomousStepMoveFromStartingPosition;
-import Autonomous.Steps.AutonomousStepPark;
-import Autonomous.Steps.AutonomousStepPositionArmForParking;
 import Autonomous.Steps.AutonomousStepPositionChopChopForPlacement;
 import Autonomous.Steps.AutonomousStepPositionLiftForPlacement;
 import Autonomous.Steps.IAutonomousStep;
