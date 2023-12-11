@@ -48,7 +48,7 @@ public class GamePad2 implements IGamePad {
 			_robot.eggDropper.Secure(2);
 		}
 
-		if (_gamePad.left_stick_button){
+		if (_gamePad.dpad_down){
 			_robot.chopChop.CorrectChop("up");
 		}
 
