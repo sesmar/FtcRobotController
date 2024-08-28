@@ -23,18 +23,19 @@ public class AutonomousStepPrepForParkA2F2 implements IAutonomousStep{
 				turnPower = -turnPower;
 				//drivePower = -drivePower;
 			}
-			_robot.driveTrain.driveForInches(7,CalamariRobot.drivePower);
+			_robot.driveTrain.driveForInches(5,CalamariRobot.drivePower);
 			_robot.driveTrain.turn(90, turnPower);
 		}else {
 			if(_spikeMark == SpikeMarkPosition.RIGHT){
 				drivePower = -drivePower;
 			}
-			_robot.driveTrain.driveSidewaysForInches(24, drivePower);
+			_robot.driveTrain.driveSidewaysForInches(22, drivePower);
 		}
 
 		if ((_alliance == AllianceColor.BLUE && _spikeMark == SpikeMarkPosition.RIGHT)
 			|| (_alliance == AllianceColor.RED && _spikeMark == SpikeMarkPosition.LEFT)){
 			_robot.driveTrain.turn(178, CalamariRobot.turnPower);
 		}
+
 	}
 }
