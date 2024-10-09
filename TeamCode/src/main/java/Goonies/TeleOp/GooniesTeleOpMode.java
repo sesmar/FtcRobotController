@@ -4,15 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import Goonies.Common.IRobot;
+import Goonies.Common.GooniesRobot;
 
 @TeleOp(name="Goonies: TeleOpMode", group="Goonies")
 public class GooniesTeleOpMode extends LinearOpMode {
-	IRobot _robot;
+	GooniesRobot _robot;
 	IGamePad _gamePad1;
 	IGamePad _gamePad2;
 
 	@Override
 	public void runOpMode() {
+		_robot = new GooniesRobot();
+		_gamePad1 = new GamePad1(this.gamepad1, _robot);
+
 		if (_robot != null) {
 			_robot.Initialize(this.hardwareMap);
 		}else {
