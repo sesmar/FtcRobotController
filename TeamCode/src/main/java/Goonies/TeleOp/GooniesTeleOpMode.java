@@ -16,6 +16,7 @@ public class GooniesTeleOpMode extends LinearOpMode {
 	public void runOpMode() {
 		_robot = new GooniesRobot();
 		_gamePad1 = new GamePad1(this.gamepad1, _robot);
+		_gamePad2 = new GamePad2(this.gamepad2 ,_robot);
 
 		if (_robot != null) {
 			_robot.Initialize(this.hardwareMap);
