@@ -2,6 +2,8 @@ package Goonies.Common;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class GooniesRobot  implements IRobot{
 
@@ -9,6 +11,8 @@ public class GooniesRobot  implements IRobot{
     public LineSlide lineSlide;
 
     public Climber climber;
+
+    public Intake intake;
 
     public void Initialize(HardwareMap hardwareMap){
         // Define and Initialize the DriveTrain
@@ -24,13 +28,14 @@ public class GooniesRobot  implements IRobot{
 
         //Motors for the cliimers
 
-        DcMotor climberRightMotor = hardwareMap.get(DcMotor.class, "crm");
-        DcMotor climberLeftMotor = hardwareMap.get(DcMotor.class, "clm");
+        DcMotor climberRightMotor = hardwareMap.get(DcMotor.class, "rcm");
+        DcMotor climberLeftMotor = hardwareMap.get(DcMotor.class, "lcm");
 
         climber = new Climber(climberRightMotor, climberLeftMotor);
 
-
-
-
+        Servo lIntake = hardwareMap.get(Servo.class, "lIntake");
+        Servo rIntake = hardwareMap.get(Servo.class, "rIntake");
+        intake = new Intake(lIntake, rIntake);
+        intake.Stop();
     }
 }

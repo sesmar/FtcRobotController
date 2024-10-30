@@ -22,15 +22,15 @@ public class GamePad1  implements IGamePad{
         double spin  = _gamePad.right_stick_x;
 
         if (Math.abs(spin) > 0.1){
-            int reduction = 2;
+            int reduction = 1;
 
-            if (_gamePad.right_bumper){reduction = 1;}
+            if (_gamePad.right_bumper){reduction = 2;}
 
             _robot.driveTrain.setPower(spin/reduction, spin/reduction, -(spin/reduction), -(spin/reduction));
         }
         else {
             int reduction = 2;
-            if (_gamePad.right_bumper){reduction = 1;}
+            if (_gamePad.right_bumper){reduction = 2;}
 
             x1 = _gamePad.left_stick_x;
             y1 = -_gamePad.left_stick_y;

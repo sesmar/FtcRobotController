@@ -65,4 +65,9 @@ public class MecanumDriveTrain {
         _rightFront.setPower(rfPower);
         _rightBack.setPower(rbPower);
     }
+
+
+    public void driveforinches (int inches, double power){
+    //    set mode
+    }
 }
