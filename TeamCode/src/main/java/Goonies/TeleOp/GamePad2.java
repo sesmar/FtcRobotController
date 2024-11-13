@@ -16,34 +16,30 @@ public class GamePad2  implements IGamePad{
         _robot = robot;
     }
     public void HandleInput(){
-        if (_gamePad.x){
-            _robot.lineSlide.Movercycle(.85);
-        }else if (_gamePad.y){
-            _robot.lineSlide.Movercycle(-.85);
-        }else{
-            _robot.lineSlide.Movercycle(0);
-        }
+        _robot.lineSlide.Movercycle(_gamePad.right_stick_y);
+        //_robot.intake.Move(_gamePad.left_stick_y/3);
 
-
-
-        if (_gamePad.b){
+        /*
+        if (_gamePad.right_bumper){
             _robot.climber.poweroffrendship(.85);
-        }else if (_gamePad.a){
+        }else if (_gamePad.left_bumper){
             _robot.climber.poweroffrendship(-.85);
         }else{
             _robot.climber.poweroffrendship(0);
         }
+*/
 
-        if (_gamePad.left_bumper){
+        /*
+        if (_gamePad.a) {
             _robot.intake.Input();
-        } else if (_gamePad.right_bumper){
+        }else if (_gamePad.b) {
             _robot.intake.Output();
-        }
-        else{
+        }else {
             _robot.intake.Stop();
         }
+*/
+        }
 //WE CLIMB WITH THE POWER OF FRIENDSHIP!!!!!!!!!
-        //if b then what the sigma
-//neurolink a move up
-    }
+       // skibidi toilet will b mine!!!!!!
+
 }

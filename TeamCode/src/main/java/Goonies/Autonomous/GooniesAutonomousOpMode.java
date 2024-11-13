@@ -3,12 +3,14 @@ package Goonies.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import Goonies.Autonomous.Programs.GooniesAutoRed1;
 import Goonies.Autonomous.Programs.IAutonomousProgram;
+import Goonies.Common.GooniesRobot;
 import Goonies.Common.IRobot;
 
-@Autonomous(name="Goonies: AutonomousOpMode", group="Goonies")
+@Autonomous(name="Goonies: AutonomousOpMode", group="Goonies", preselectTeleOp = "Goonies: TeleOpMode")
 public class GooniesAutonomousOpMode extends LinearOpMode {
-	IRobot _robot;
+	IRobot _robot = new GooniesRobot(this);
 	IAutonomousProgram _program;
 
 	@Override
@@ -19,6 +21,8 @@ public class GooniesAutonomousOpMode extends LinearOpMode {
 			telemetry.addData("Robot", "Robot was not Instantiated");
 			telemetry.update();
 		}
+
+		_program = new GooniesAutoRed1((GooniesRobot)_robot);
 
 		telemetry.addData("Status", "Autonomous Initialized");
 		telemetry.update();

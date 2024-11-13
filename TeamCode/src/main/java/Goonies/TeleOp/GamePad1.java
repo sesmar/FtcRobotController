@@ -20,17 +20,17 @@ public class GamePad1  implements IGamePad{
         double x2; //rotated 45 degrees counterclockwise
         double y2; //rotates 45 degrees counterclockwise
         double spin  = _gamePad.right_stick_x;
+        int reduction = 2;
 
         if (Math.abs(spin) > 0.1){
-            int reduction = 1;
 
-            if (_gamePad.right_bumper){reduction = 2;}
+            if (_gamePad.right_bumper){reduction = 1;}
 
             _robot.driveTrain.setPower(spin/reduction, spin/reduction, -(spin/reduction), -(spin/reduction));
         }
         else {
-            int reduction = 2;
-            if (_gamePad.right_bumper){reduction = 2;}
+
+            if (_gamePad.right_bumper){reduction = 1;}
 
             x1 = _gamePad.left_stick_x;
             y1 = -_gamePad.left_stick_y;
