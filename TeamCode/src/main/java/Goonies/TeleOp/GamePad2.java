@@ -2,12 +2,8 @@ package Goonies.TeleOp;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import Goonies.Common.GooniesRobot;
-import Goonies.Common.LineSlide;
 
 public class GamePad2  implements IGamePad{
-    private static final double fortyFiveRads = -Math.PI/4;
-    private static final double cosine45 = Math.cos(fortyFiveRads);
-    private static final double sine45 = Math.sin(fortyFiveRads);
     private final GooniesRobot _robot;
     private final Gamepad _gamePad;
 
@@ -15,31 +11,28 @@ public class GamePad2  implements IGamePad{
         _gamePad = gamePad;
         _robot = robot;
     }
-    public void HandleInput(){
-        _robot.lineSlide.Movercycle(_gamePad.right_stick_y);
-        //_robot.intake.Move(_gamePad.left_stick_y/3);
 
-        /*
-        if (_gamePad.right_bumper){
-            _robot.climber.poweroffrendship(.85);
-        }else if (_gamePad.left_bumper){
-            _robot.climber.poweroffrendship(-.85);
-        }else{
-            _robot.climber.poweroffrendship(0);
-        }
-*/
+    public void HandleInput() {
+        _robot.linearSlide.Movercycle(_gamePad.right_stick_y);
 
-        /*
         if (_gamePad.a) {
-            _robot.intake.Input();
-        }else if (_gamePad.b) {
-            _robot.intake.Output();
-        }else {
-            _robot.intake.Stop();
+            _robot.grabber.open();
         }
-*/
-        }
-//WE CLIMB WITH THE POWER OF FRIENDSHIP!!!!!!!!!
-       // skibidi toilet will b mine!!!!!!
 
+        if (_gamePad.b) {
+            _robot.grabber.close();
+        }
+
+        if (_gamePad.x) {
+            _robot.grabber.positionForGrabbing();
+        }
+
+        if (_gamePad.y) {
+            _robot.grabber.positionForMoving();
+        }
+
+        if (_gamePad.right_bumper) {
+            _robot.grabber.positionForDunk();
+        }
+    }
 }

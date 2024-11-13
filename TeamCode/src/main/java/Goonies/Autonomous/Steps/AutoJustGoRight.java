@@ -1,6 +1,5 @@
 package Goonies.Autonomous.Steps;
 
-import Goonies.Autonomous.Programs.GooniesAutoRed1;
 import Goonies.Common.GooniesRobot;
 
 public class AutoJustGoRight implements IAutonomousStep {
@@ -14,6 +13,6 @@ public class AutoJustGoRight implements IAutonomousStep {
 
     @Override
     public void Execute() {
-        _robot.driveTrain.DriveForSeconds(_seconds, _robot.drivePower);
+        _robot.driveTrain.driveForSeconds(_seconds, _robot.drivePower);
     }
 }

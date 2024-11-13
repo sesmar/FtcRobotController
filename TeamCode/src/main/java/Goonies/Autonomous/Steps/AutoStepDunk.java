@@ -11,6 +11,10 @@ public class AutoStepDunk implements IAutonomousStep{
 
     @Override
     public void Execute() {
-        _robot.lineSlide.Drive(100);
+        _robot.linearSlide.drive();
+        _robot.grabber.positionForDunk(true);
+        _robot.grabber.open(true);
+        _robot.grabber.positionForMoving(true);
+        _robot.linearSlide.retract();
     }
 }

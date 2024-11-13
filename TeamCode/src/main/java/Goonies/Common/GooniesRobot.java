@@ -7,24 +7,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import Goonies.Autonomous.Programs.GooniesAutoRed1;
-
 public class GooniesRobot  implements IRobot {
 
     public MecanumDriveTrain driveTrain;
-    public LineSlide lineSlide;
+    public LineSlide linearSlide;
 
     //public Climber climber;
 
-    public Intake intake;
+    public Grabber grabber;
 
     public double drivePower = .75;
     public double turnPower = .5;
 
-    public LinearOpMode myOpMode;
+    private LinearOpMode _myOpMode = null;
 
     public GooniesRobot(LinearOpMode opMode) {
-        myOpMode = opMode;
+        _myOpMode = opMode;
     }
 
     public void Initialize(HardwareMap hardwareMap) {
@@ -36,24 +34,23 @@ public class GooniesRobot  implements IRobot {
         IMU imu = hardwareMap.get(IMU.class, "imu");
 
         Gyro gyro = new Gyro(imu);
-        driveTrain = new MecanumDriveTrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gyro, myOpMode);
+        driveTrain = new MecanumDriveTrain(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor, gyro, _myOpMode);
 
-        DcMotor lineslide = hardwareMap.get(DcMotor.class, "linear");
-        lineSlide = new LineSlide(lineslide);
+        //The Linear Slide is driven by one motor.
+        DcMotor lineSlide = hardwareMap.get(DcMotor.class, "linear");
+        TouchSensor linearTs = _myOpMode.hardwareMap.get(TouchSensor.class,"linearTs");
+        linearSlide = new LineSlide(lineSlide, linearTs);
 
-        //Motors for the cliimers
+        //Grabber class, 2 servos, one to controller the "arm" and the other for the "pincher"
+        Servo arm = hardwareMap.get(Servo.class, "arm");
+        Servo pincher = hardwareMap.get(Servo.class, "pincher");
+        grabber = new Grabber(arm, pincher, _myOpMode);
 
+        //Motors for the cliimber
         //DcMotor climberRightMotor = hardwareMap.get(DcMotor.class, "rcm");
         //DcMotor climberLeftMotor = hardwareMap.get(DcMotor.class, "lcm");
 
         //climber = new Climber(climberRightMotor, climberLeftMotor);
-/*
-        Servo lIntake = hardwareMap.get(Servo.class, "lIntake");
-        DcMotor intakemover = hardwareMap.get(DcMotor.class, "intakelowerer");
-        intake = new Intake(lIntake, intakemover);
-        intake.Stop();
-*/
     }
-
 }
 

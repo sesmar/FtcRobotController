@@ -23,7 +23,7 @@ public class MecanumDriveTrain {
     
     private final Gyro _gyro;
 
-    private LinearOpMode myOpMode;
+    private LinearOpMode _myOpMode = null;
 
     public MecanumDriveTrain(DcMotor leftFront, DcMotor leftBack, DcMotor rightFront, DcMotor rightBack, Gyro gyro, LinearOpMode opMode) {
         _leftFront = leftFront;
@@ -31,6 +31,7 @@ public class MecanumDriveTrain {
         _rightFront = rightFront;
         _rightBack = rightBack;
         _gyro = gyro;
+        _myOpMode = opMode;
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         _leftFront.setDirection(DcMotor.Direction.REVERSE);
@@ -97,7 +98,6 @@ public class MecanumDriveTrain {
     public void driveSidewaysForInches(int inches, double power) {
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
         int targetPosition = (int) (inches * CPI);
 
         if (power < 0) {
@@ -110,7 +110,6 @@ public class MecanumDriveTrain {
         setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while (_leftFront.isBusy() || _leftBack.isBusy() || _rightFront.isBusy() || _rightBack.isBusy()) {
-
 
         }
 
@@ -155,12 +154,15 @@ public class MecanumDriveTrain {
         stop();
     }
 
-    public void DriveForSeconds(int seconds, double power){
+    public void driveForSeconds(int seconds, double power){
         setPower(power, -power, -power, power);
-        double startTime = myOpMode.getRuntime();
-        while((myOpMode.getRuntime() - startTime) < seconds) {
 
+        double startTime = _myOpMode.getRuntime();
+
+        while((_myOpMode.getRuntime() - startTime) < seconds) {
+            //Waiting for the the desired time.
         }
+
         setPower(0);
     }
 }

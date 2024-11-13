@@ -3,7 +3,7 @@ package Goonies.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import Goonies.Autonomous.Programs.GooniesAutoRed1;
+import Goonies.Autonomous.Programs.GooniesAutoObservation;
 import Goonies.Autonomous.Programs.IAutonomousProgram;
 import Goonies.Common.GooniesRobot;
 import Goonies.Common.IRobot;
@@ -22,7 +22,7 @@ public class GooniesAutonomousOpMode extends LinearOpMode {
 			telemetry.update();
 		}
 
-		_program = new GooniesAutoRed1((GooniesRobot)_robot);
+		_program = new GooniesAutoObservation((GooniesRobot)_robot);
 
 		telemetry.addData("Status", "Autonomous Initialized");
 		telemetry.update();
