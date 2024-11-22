@@ -1,6 +1,7 @@
 package Goonies.Common;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class LineSlide {
@@ -11,13 +12,22 @@ public class LineSlide {
     public LineSlide(DcMotor motorcycle, TouchSensor linearTs) {
         _motorcycle = motorcycle;
         _linearTs = linearTs;
+
+        //_motorcycle.setDirection(DcMotorSimple.Direction.REVERSE);
+        _motorcycle.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        _motorcycle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void Movercycle(double power)
     {
-        if (!_linearTs.isPressed())
-        {
-            _motorcycle.setPower(-power);
+        if (power < 0 ) {
+                _motorcycle.setPower(power);
+        }
+        else if (power > 0&& !_linearTs.isPressed()){
+            _motorcycle.setPower(power);
+        }
+        else{
+            _motorcycle.setPower(0);
         }
     }
 

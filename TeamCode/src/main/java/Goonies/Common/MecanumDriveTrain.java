@@ -10,7 +10,7 @@ public class MecanumDriveTrain {
 
     public static final double wheelCircumference = Math.PI * wheelDiameter;
     //Counts Per Revolution for the Drive Motors
-    public static final double CPR = 288;
+    public static final double CPR = 576;
 
     //Count Per Inch for the Drive Motors
     public static final double CPI = CPR / wheelCircumference;
@@ -39,6 +39,9 @@ public class MecanumDriveTrain {
 
         _rightFront.setDirection(DcMotor.Direction.FORWARD);
         _rightBack.setDirection(DcMotor.Direction.FORWARD);
+
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /**
@@ -89,8 +92,14 @@ public class MecanumDriveTrain {
         setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while (_leftFront.isBusy() || _leftBack.isBusy() || _rightBack.isBusy() || _rightFront.isBusy()) {
-
+            _myOpMode.telemetry.addData("Status", "Driving for Inches");
+            _myOpMode.telemetry.addData("Left Front Encoder","%d", _leftFront.getCurrentPosition());
+            _myOpMode.telemetry.addData("Left Back Encoder","%d", _leftBack.getCurrentPosition());
+            _myOpMode.telemetry.addData("Right Front Encoder","%d", _rightFront.getCurrentPosition());
+            _myOpMode.telemetry.addData("Right Back Encoder","%d", _rightBack.getCurrentPosition());
+            _myOpMode.telemetry.update();
         }
+
         stop();
         setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
@@ -110,7 +119,12 @@ public class MecanumDriveTrain {
         setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while (_leftFront.isBusy() || _leftBack.isBusy() || _rightFront.isBusy() || _rightBack.isBusy()) {
-
+            _myOpMode.telemetry.addData("Status", "Driving Sideways Inches");
+            _myOpMode.telemetry.addData("Left Front Encoder","%d", _leftFront.getCurrentPosition());
+            _myOpMode.telemetry.addData("Left Back Encoder","%d", _leftBack.getCurrentPosition());
+            _myOpMode.telemetry.addData("Right Front Encoder","%d", _rightFront.getCurrentPosition());
+            _myOpMode.telemetry.addData("Right Back Encoder","%d", _rightBack.getCurrentPosition());
+            _myOpMode.telemetry.update();
         }
 
         stop();
@@ -121,7 +135,7 @@ public class MecanumDriveTrain {
         _leftFront.setMode(runMode);
         _leftBack.setMode(runMode);
         _rightFront.setMode(runMode);
-        _rightFront.setMode(runMode);
+        _rightBack.setMode(runMode);
     }
 
     private void setTargetPosition(double targetPosition) {
@@ -146,10 +160,10 @@ public class MecanumDriveTrain {
         int drift = 12;
         _gyro.resetYaw();
         while (Math.abs(_gyro.getYaw()) < (Math.abs(degrees) - drift)) {
-            _leftFront.setPower(-power);
-            _leftBack.setPower(-power);
-            _rightFront.setPower(power);
-            _rightBack.setPower(power);
+            _leftFront.setPower(power);
+            _leftBack.setPower(power);
+            _rightFront.setPower(-power);
+            _rightBack.setPower(-power);
         }
         stop();
     }

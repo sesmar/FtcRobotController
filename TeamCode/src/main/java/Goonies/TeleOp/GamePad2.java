@@ -13,7 +13,7 @@ public class GamePad2  implements IGamePad{
     }
 
     public void HandleInput() {
-        _robot.linearSlide.Movercycle(_gamePad.right_stick_y);
+        _robot.linearSlide.Movercycle(_gamePad.left_stick_y);
 
         if (_gamePad.a) {
             _robot.grabber.open();

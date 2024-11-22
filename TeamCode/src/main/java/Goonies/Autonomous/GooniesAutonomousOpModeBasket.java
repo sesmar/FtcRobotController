@@ -3,13 +3,14 @@ package Goonies.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import Goonies.Autonomous.Programs.GooniesAutoBasket;
 import Goonies.Autonomous.Programs.GooniesAutoObservation;
 import Goonies.Autonomous.Programs.IAutonomousProgram;
 import Goonies.Common.GooniesRobot;
 import Goonies.Common.IRobot;
 
-@Autonomous(name="Goonies: AutonomousOpMode", group="Goonies", preselectTeleOp = "Goonies: TeleOpMode")
-public class GooniesAutonomousOpMode extends LinearOpMode {
+@Autonomous(name="Goonies: AutonomousOpModeBasket", group="Goonies", preselectTeleOp = "Goonies: TeleOpMode")
+public class GooniesAutonomousOpModeBasket extends LinearOpMode {
 	IRobot _robot = new GooniesRobot(this);
 	IAutonomousProgram _program;
 
@@ -22,7 +23,7 @@ public class GooniesAutonomousOpMode extends LinearOpMode {
 			telemetry.update();
 		}
 
-		_program = new GooniesAutoObservation((GooniesRobot)_robot);
+		_program = new GooniesAutoBasket((GooniesRobot)_robot);
 
 		telemetry.addData("Status", "Autonomous Initialized");
 		telemetry.update();

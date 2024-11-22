@@ -45,6 +45,7 @@ public class GooniesRobot  implements IRobot {
         Servo arm = hardwareMap.get(Servo.class, "arm");
         Servo pincher = hardwareMap.get(Servo.class, "pincher");
         grabber = new Grabber(arm, pincher, _myOpMode);
+        grabber.close();
 
         //Motors for the cliimber
         //DcMotor climberRightMotor = hardwareMap.get(DcMotor.class, "rcm");

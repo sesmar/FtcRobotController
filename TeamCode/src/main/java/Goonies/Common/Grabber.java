@@ -19,7 +19,7 @@ public class Grabber {
     }
 
     public void positionForMoving(boolean forcedWait){
-        _arm.setPosition(0);
+        _arm.setPosition(1);
 
         if (forcedWait) {
             double startTime = _myOpMode.getRuntime();
@@ -35,7 +35,7 @@ public class Grabber {
     }
 
     public void positionForGrabbing(boolean forcedWait){
-        _arm.setPosition(1);
+        _arm.setPosition(0);
 
         if (forcedWait) {
             double startTime = _myOpMode.getRuntime();
@@ -51,7 +51,7 @@ public class Grabber {
     }
 
     public void positionForDunk(boolean forcedWait){
-        _arm.setPosition(.1);
+        _arm.setPosition(0.5);
 
         if (forcedWait) {
             double startTime = _myOpMode.getRuntime();
